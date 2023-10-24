@@ -17,9 +17,14 @@ const TabNavigation = ()=>{
   return (
       <tabs.Navigator 
         initialRouteName="Posts"
-        screenOptions={{tabBarStyle:{backgroundColor: "black"}, tabBarShowLabel: false,
-        tabBarActiveTintColor: '#E0FFB4',
-        tabBarInactiveTintColor: "grey"}}
+        screenOptions={{
+          tabBarStyle:{backgroundColor: "black", alignItems: 'center'}, 
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#E0FFB4',
+          tabBarInactiveTintColor: "grey",
+          title:"Soil Society",
+          headerPressOpacity: 5
+        }}
       >
         <tabs.Screen 
           name="Posts" 
