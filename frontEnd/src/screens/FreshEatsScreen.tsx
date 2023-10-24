@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const FreshEatsScreen = () =>{
     return(
-        <View>
+        <View> 
             <Text>This is Fresh eats Screen</Text>
         </View>
     );
