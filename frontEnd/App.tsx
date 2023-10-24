@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import TabNavigation from './src/navigations/TabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 
