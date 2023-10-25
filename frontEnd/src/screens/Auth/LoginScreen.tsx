@@ -1,6 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, Button, TouchableOpacity, TextInput} from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import ForgotPass from './ForgotPass';
 
 
 const LoginScreen = () =>{
@@ -13,7 +14,13 @@ const LoginScreen = () =>{
             <TouchableOpacity style={styles.buttonStyle} onPress={()=> navigation.navigate('home')}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-            {/* <Button title="goto home" onPress={()=> navigation.navigate('home')}/> */}
+
+            <TouchableOpacity style={styles.forgotpassStyle} onPress={()=> navigation.navigate('forgotpass')}>
+                <Text style={styles.forgotpassTxt}>Forgot password? click here..</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.regStyle} onPress={()=> navigation.navigate('register')}>
+                <Text style={styles.forgotpassTxt}>Or, Register Here</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -53,7 +60,21 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         color:"#D8E9A8",
         fontWeight: '700'
-    }
+    },
+    forgotpassStyle:{
+        marginVertical: 40,
+        alignSelf:'flex-start',
+        marginLeft: 50
+    },
+    forgotpassTxt:{
+        color:'#00a2fa',
+        fontWeight: 'bold'
+    },
+    regStyle:{
+        alignSelf:'flex-end',
+        marginRight: 50,
+        bottom: 60
+    },
 });
 
 export default LoginScreen;
