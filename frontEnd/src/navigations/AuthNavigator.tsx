@@ -41,7 +41,19 @@ function AuthNavigator() {
           title: "Soil Society",
         })}
       />
-      <Stack.Screen name="register" component={RegisterScreen} />
+      <Stack.Screen 
+        name="register" 
+        component={RegisterScreen} 
+        options={({route}) => ({
+          headerTintColor: "white",
+          // headerBackTitle: 'Back',
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          title: "Register",
+        })}
+      />
       <Stack.Screen
         name="home"
         component={TabNavigation}
