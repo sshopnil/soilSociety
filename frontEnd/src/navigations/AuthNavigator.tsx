@@ -31,6 +31,15 @@ function AuthNavigator() {
       <Stack.Screen
         name="login"
         component={LoginScreen}
+        options={({route}) => ({
+          headerTintColor: "white",
+          // headerBackTitle: 'Back',
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          title: "Soil Society",
+        })}
       />
       <Stack.Screen name="register" component={RegisterScreen} />
       <Stack.Screen
