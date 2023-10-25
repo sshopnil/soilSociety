@@ -2,12 +2,16 @@ import React from 'react';
 import { StyleSheet, View} from 'react-native';
 import TabNavigation from './src/navigations/TabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './src/navigations/AuthNavigator';
+import 'react-native-gesture-handler';
+
 
 const App = ()=>{
 
   return (
     <NavigationContainer>
-      <TabNavigation/>
+      {/* <TabNavigation/> */}
+      <AuthNavigator/>
     </NavigationContainer>
   );
 
@@ -28,3 +32,5 @@ const styles = StyleSheet.create({
 
 
 export default App;
+
+
