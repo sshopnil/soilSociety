@@ -7,7 +7,7 @@ import PostScreen from '../screens/Posts/PostScreen';
 import GchatsScreen from '../screens/Gchats/GchatsScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-
+import UserInfo from '../screens/profile/UserInfo';
 
 
 const tabs = createBottomTabNavigator();
@@ -60,6 +60,15 @@ const TabNavigation = ()=>{
           component={GchatsScreen}
           options={{
             tabBarIcon: ({focused})=> <MaterialCommunityIcons name={focused ? "chat": "chat-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
+            tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
+            tabBarActiveTintColor: "#E0FFB4"
+          }}
+        />
+        <tabs.Screen 
+          name="userinfo" 
+          component={UserInfo}
+          options={{
+            tabBarIcon: ({focused})=> <Ionicons name={focused ? "person": "person-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
             tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
             tabBarActiveTintColor: "#E0FFB4"
           }}
