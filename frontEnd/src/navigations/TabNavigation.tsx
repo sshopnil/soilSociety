@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FreshEatsScreen from '../screens/FreshEatsScreen';
-import CropCareScreen from '../screens/CropCareScreen';
-import PostScreen from '../screens/PostScreen';
-import GchatsScreen from '../screens/GchatsScreen';
+import FreshEatsScreen from '../screens/FreshEats/FreshEatsScreen';
+import CropCareScreen from '../screens/CropCare/CropCareScreen';
+import PostScreen from '../screens/Posts/PostScreen';
+import GchatsScreen from '../screens/Gchats/GchatsScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
