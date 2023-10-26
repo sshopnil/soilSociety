@@ -3,6 +3,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabNavigation from './TabNavigation';
 import ViewCartScreen from '../screens/FreshEats/ViewCartScreen';
 import ViewWishListScreen from '../screens/FreshEats/ViewWishListScreen';
+import ViewOrderScreen from '../screens/FreshEats/ViewOrderScreen';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -10,16 +12,15 @@ function DrawerNavigator() {
     return (
         <Drawer.Navigator
             screenOptions={{
-                headerShown: false,
                 drawerActiveBackgroundColor: "black",
-                drawerActiveTintColor: "white"
+                drawerActiveTintColor: "white",
             }}
             >
             <Drawer.Screen
                 name="posts"
                 component={TabNavigation}
                 options={{
-                    title: 'posts'
+                    title: 'Soil Society'
                 }}
             />
 
@@ -36,6 +37,13 @@ function DrawerNavigator() {
                 component={ViewWishListScreen}
                 options={{
                     title: 'WishList'
+                }}
+            />
+            <Drawer.Screen
+                name="orders"
+                component={ViewOrderScreen}
+                options={{
+                    title: 'Orders'
                 }}
             />
         </Drawer.Navigator>
