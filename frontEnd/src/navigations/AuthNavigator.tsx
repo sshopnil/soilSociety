@@ -56,7 +56,7 @@ function AuthNavigator() {
       />
       <Stack.Screen
         name="home"
-        component={TabNavigation}
+        component={DrawerNavigator}
         options={{headerShown:false}}
       />
     </Stack.Navigator>

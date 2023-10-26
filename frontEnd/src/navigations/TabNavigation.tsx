@@ -8,7 +8,9 @@ import GchatsScreen from '../screens/Gchats/GchatsScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import UserInfo from '../screens/profile/UserInfo';
-
+import ViewCartScreen from '../screens/FreshEats/ViewCartScreen';
+import { Zocial } from '@expo/vector-icons';
+import DrawerNavigator from './DrawerNavigator';
 
 const tabs = createBottomTabNavigator();
 
@@ -23,7 +25,8 @@ const TabNavigation = ()=>{
           tabBarActiveTintColor: '#E0FFB4',
           tabBarInactiveTintColor: "grey",
           title:"Soil Society",
-          headerPressOpacity: 5
+          headerPressOpacity: 5,
+          headerShown: false
         }}
       >
         <tabs.Screen 
