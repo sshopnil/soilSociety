@@ -17,8 +17,9 @@ const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl }) => {
       <Image source={{ uri: imageUrl }} 
                 style={styles.image}
                 onError={(e) => {
-                    console.log('Image loading error:', e.nativeEvent.error);
-                  }} />
+                  <Text>hi</Text>
+                  console.log('Image loading error:', e.nativeEvent.error);
+                }} />
     </View>
   );
 };
@@ -31,10 +32,11 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 9,
     borderWidth: 1,
-    borderColor: '#ccc'
+    borderColor: '#ccc',
   },
   textContainer: {
     flex: 1, // Takes up remaining horizontal space
+    padding: 5
   },
   title: {
     fontSize: 18,
@@ -47,7 +49,10 @@ const styles = StyleSheet.create({
   image: {
     width: 80,
     height: 80,
-    borderRadius: 8,
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 9,
+    marginTop: 5
   },
 });
 

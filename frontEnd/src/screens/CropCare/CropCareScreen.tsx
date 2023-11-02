@@ -3,15 +3,25 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { Title } from 'react-native-paper';
 import PostCard from '../../providers/PostCard';
 
+
+
 const CropCareScreen = () =>{
-    
     return(
         <View>
-            <Text style={styles.title}>This is Crop care Screen</Text>
-            <PostCard title='The 1st post' question='my question is big.my question is big.my question is big.my question is big.'
-                imageUrl='frontEnd/assets/post-card-images/sample-crop.jpg'/>
-            <PostCard title='The 2nd post' question='my question is big.my question is big.my question is big.my question is big.'
-                imageUrl='frontEnd/assets/post-card-images/sample-crop.jpg'/>    
+            <Text style={styles.title}>Crop Care Screen</Text>
+            
+            <View>
+                <Text>Tips</Text>
+                <Text>Discussion</Text>
+            </View>
+            
+            <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
+                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+            
+            <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
+                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>  
+            {/* <Image source={require('https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0')}
+                    style={{width: 40, height: 40}} />;  */}
         </View>
     );
 };
@@ -40,8 +50,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     borderRadius: 8,
   },
 });
