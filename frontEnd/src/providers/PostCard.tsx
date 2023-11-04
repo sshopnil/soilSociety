@@ -1,26 +1,47 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 interface PostCardProps {
   title: string;
   question: string;
   imageUrl: string;
+  navigation: any;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl }) => {
+// const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl }) => {
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.textContainer}>
+//         <Text style={styles.title}>{title}</Text>
+//         <Text style={styles.question}>{question}</Text>
+//       </View>
+//       <Image source={{ uri: imageUrl }} 
+//                 style={styles.image}
+//                 onError={(e) => {
+//                   <Text>hi</Text>
+//                   console.log('Image loading error:', e.nativeEvent.error);
+//                 }} />
+//     </View>
+//   );
+// };
+
+const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl, navigation }) => {
+  const handleCardPress = () => {
+    navigation.navigate('CropPostDetail', { title, question, imageUrl });
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleCardPress}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.question}>{question}</Text>
       </View>
-      <Image source={{ uri: imageUrl }} 
-                style={styles.image}
-                onError={(e) => {
-                  <Text>hi</Text>
-                  console.log('Image loading error:', e.nativeEvent.error);
-                }} />
-    </View>
+      <Image source={{ uri: imageUrl }} style={styles.image} 
+        onError={(e) => {
+                            <Text>hi</Text>
+                            console.log('Image loading error:', e.nativeEvent.error);
+                          }}/>
+    </TouchableOpacity>
   );
 };
 
