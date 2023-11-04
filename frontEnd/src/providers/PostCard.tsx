@@ -38,7 +38,7 @@ const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl, navigati
       </View>
       <Image source={{ uri: imageUrl }} style={styles.image} 
         onError={(e) => {
-                            <Text>hi</Text>
+                            <Text>image</Text>
                             console.log('Image loading error:', e.nativeEvent.error);
                           }}/>
     </TouchableOpacity>

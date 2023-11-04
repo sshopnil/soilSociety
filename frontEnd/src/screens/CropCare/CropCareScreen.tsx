@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Title } from 'react-native-paper';
 import PostCard from '../../providers/PostCard';
 
 
+const stack = createStackNavigator()
 
 const CropCareScreen = () =>{
     return(
@@ -16,12 +18,12 @@ const CropCareScreen = () =>{
             </View>
             
             <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'
+                navigation={}/>
             
             <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>  
-            {/* <Image source={require('https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0')}
-                    style={{width: 40, height: 40}} />;  */}
+                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'
+                navigation={}/>
         </View>
     );
 };
