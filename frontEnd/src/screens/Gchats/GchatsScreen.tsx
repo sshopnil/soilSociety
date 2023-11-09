@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 const GchatsScreen = () =>{
     return(
         <View>
-            <Text>This is Green Chats Screen</Text>
+            <Text>ami ham tam kori</Text>
         </View>
     );
 };
