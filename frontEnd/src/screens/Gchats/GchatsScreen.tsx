@@ -3,6 +3,7 @@ import { View,Text,SafeAreaView,TextInput,TouchableOpacity,ScrollView   } from '
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 import LocalChats from './Components/LocalChats'
+import OnlineUsersList from './Components/OnlineUsersList';
 
 
 
@@ -16,11 +17,12 @@ const GchatsScreen = () =>{
         setSelectedButton(buttonId);
     };
 
+    const onlineUsers = ['User1', 'User2', 'User3', /* ... */];
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
             <Text style={{
                     color: "#D8E9A8",
-                    fontFamily: "Arimo Hebrew Subset",
                     fontSize: 30,
                     fontStyle: "normal",
                     fontWeight: "700",
@@ -38,6 +40,8 @@ const GchatsScreen = () =>{
                 marginRight: 5,
                 borderRadius: 20
             }}>
+
+                <OnlineUsersList/>
                 
 
                 <View style={{
@@ -52,9 +56,9 @@ const GchatsScreen = () =>{
                 }}>
                     <ScrollView
                         horizontal={true} 
+                        scrollEventThrottle={16}
                         style={{
                             paddingLeft: 13 
-
                         }}
                     >
                         <TouchableOpacity
@@ -113,8 +117,6 @@ const GchatsScreen = () =>{
                                 marginRight:5,
                             }}>Experts</Text>
                         </TouchableOpacity>
-
-
                     </ScrollView>
 
                 </View>
