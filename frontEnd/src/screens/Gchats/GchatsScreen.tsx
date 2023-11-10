@@ -38,7 +38,8 @@ const GchatsScreen = () =>{
                 marginTop: 15,
                 marginLeft: 5,
                 marginRight: 5,
-                borderRadius: 20
+                borderRadius: 20,
+                overflow: 'hidden',
             }}>
 
                 <OnlineUsersList/>
@@ -48,18 +49,18 @@ const GchatsScreen = () =>{
                     backgroundColor: "#D8E9A8",
                     height: 46,
                     flexShrink: 0,
-                    marginTop: 7,
                     marginBottom:8,
                     marginLeft: 20,
                     marginRight: 20,
-                    borderRadius: 20
+                    borderRadius: 20,
+                    paddingTop:3,
                     
                 }}>
                     <ScrollView
                         horizontal={true} 
                         scrollEventThrottle={16}
                         style={{
-                            paddingLeft: 13 
+                            paddingLeft: 13, 
                         }}
                     >
                         <TouchableOpacity
@@ -67,18 +68,19 @@ const GchatsScreen = () =>{
                             style={{
                                 backgroundColor: selectedButton === 1 ? '#64ABBC' : '#D8E9A8', 
                                 borderRadius: 20,
-                                marginTop: 3,
-                                marginRight: 5,
-                                
                                 height: 40,
                                 padding: 10,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginRight: 8
                             }}
                         >
                             <Text style={{
                                 color: selectedButton === 1 ? '#FEFEFE' : '#1B1B1B',
-                                marginLeft:5,
-                                marginRight:5,
+                                textAlign: 'center',
+                                textAlignVertical: 'center',
                             }}>Global</Text>
+
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -86,17 +88,18 @@ const GchatsScreen = () =>{
                             style={{
                                 backgroundColor: selectedButton === 2 ? '#64ABBC' : '#D8E9A8', 
                                 borderRadius: 20,
-                                marginTop: 3,
-                                marginRight: 5,
-                                
                                 height: 40,
                                 padding: 10,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginRight: 8
                             }}
                         >
                             <Text style={{
                                 color: selectedButton === 2 ? '#FEFEFE' : '#1B1B1B',
-                                marginLeft:5,
-                                marginRight:5,
+                                textAlign: 'center',
+                                textAlignVertical: 'center',
+
                             }}>Local</Text>
                         </TouchableOpacity>
 
@@ -105,19 +108,20 @@ const GchatsScreen = () =>{
                             style={{
                                 backgroundColor: selectedButton === 3 ? '#64ABBC' : '#D8E9A8', 
                                 borderRadius: 20,
-                                marginTop: 3,
-                                marginRight: 5,
-                                
                                 height: 40,
                                 padding: 10,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginRight: 8
                             }}
                         >
                             <Text style={{
                                 color: selectedButton === 3 ? '#FEFEFE' : '#1B1B1B',
-                                marginLeft:5,
-                                marginRight:5,
+                                textAlign: 'center',
+                                textAlignVertical: 'center',
                             }}>Experts</Text>
                         </TouchableOpacity>
+
                     </ScrollView>
 
                 </View>

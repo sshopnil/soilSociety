@@ -14,7 +14,12 @@ const OnlineUsersList = () =>{
       showsHorizontalScrollIndicator={false} 
       style={styles.mainContainer}
       scrollEventThrottle={16}
+
     >
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello my "/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
       <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
       <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
       <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
@@ -28,6 +33,7 @@ const OnlineUsersList = () =>{
 const styles = StyleSheet.create({
   mainContainer: {
     marginTop: 8,
+
   },
 });
 
