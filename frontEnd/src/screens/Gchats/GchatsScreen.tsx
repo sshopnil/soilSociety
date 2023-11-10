@@ -34,7 +34,7 @@ const GchatsScreen = () =>{
 
             <View style={{
                 backgroundColor: "#FEFEFE", 
-                height: 137,
+                height: 145,
                 marginTop: 15,
                 marginLeft: 5,
                 marginRight: 5,
@@ -48,7 +48,8 @@ const GchatsScreen = () =>{
                     backgroundColor: "#D8E9A8",
                     height: 46,
                     flexShrink: 0,
-                    marginTop: 81,
+                    marginTop: 7,
+                    marginBottom:8,
                     marginLeft: 20,
                     marginRight: 20,
                     borderRadius: 20
@@ -120,15 +121,9 @@ const GchatsScreen = () =>{
                     </ScrollView>
 
                 </View>
-                
-                
-
-                
-                {selectedButton === 2 && <LocalChats/>}
-                
-                
-
             </View>
+
+            {selectedButton === 2 && <LocalChats/>}
             
         </SafeAreaView>
     );

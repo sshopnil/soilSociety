@@ -1,39 +1,34 @@
 import React from 'react';
-import Users from './Users'; 
-import { ScrollView, StyleSheet, View, Text, Image  } from 'react-native';
+import Users from './Users';
+import { ScrollView, StyleSheet, View, Text, Image, requireNativeComponent  } from 'react-native';
 
 const Box = () =>{
 
 }
 
-const OnlineUsersList = () =>(
+const OnlineUsersList = () =>{
 
-  <View>
+  return (
     <ScrollView 
       horizontal 
       showsHorizontalScrollIndicator={false} 
-      style={styles.scrollContainer}
+      style={styles.mainContainer}
       scrollEventThrottle={16}
     >
-      <View style={{height:60, width:60,marginLeft: 20}}>
-        <Image source={require('../../../../assets/post-card-images/sample-crop.jpg')}
-        style={{
-          flex: 1,
-          resizeMode: 'cover',
-          height: null,
-          width: null, 
-          borderRadius: 30, 
-          overflow: 'hidden', 
-        }}/>
-      </View>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      <Users imageUri={require('../../../../assets/post-card-images/sample-crop.jpg')} name="hello"/>
+      
     </ScrollView>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
-    scrollContainer: {
-        marginTop: 15,
-    },
+  mainContainer: {
+    marginTop: 8,
+  },
 });
 
 export default OnlineUsersList;

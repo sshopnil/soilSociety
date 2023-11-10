@@ -20,7 +20,7 @@ const LocalChats =()=> {
                     paddingLeft: 20,
                     height: 50,
                     borderRadius: 20,
-                    marginTop: 35,
+                    marginTop: 15,
                     marginLeft: 15,
                     marginRight: 15,
                 }}
