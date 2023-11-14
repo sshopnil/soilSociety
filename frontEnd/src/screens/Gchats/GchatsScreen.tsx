@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 import LocalChats from './Components/LocalChats'
 import OnlineUsersList from './Components/OnlineUsersList';
+import GlobalChats from './Components/GlobalChats';
 
 
 
@@ -79,7 +80,7 @@ const GchatsScreen = () =>{
                                 color: selectedButton === 1 ? '#FEFEFE' : '#1B1B1B',
                                 textAlign: 'center',
                                 textAlignVertical: 'center',
-                            }}>Global</Text>
+                            }}> Global </Text>
 
                         </TouchableOpacity>
 
@@ -100,7 +101,7 @@ const GchatsScreen = () =>{
                                 textAlign: 'center',
                                 textAlignVertical: 'center',
 
-                            }}>Local</Text>
+                            }}> Local </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -119,7 +120,7 @@ const GchatsScreen = () =>{
                                 color: selectedButton === 3 ? '#FEFEFE' : '#1B1B1B',
                                 textAlign: 'center',
                                 textAlignVertical: 'center',
-                            }}>Experts</Text>
+                            }}> Experts </Text>
                         </TouchableOpacity>
 
                     </ScrollView>
@@ -127,6 +128,7 @@ const GchatsScreen = () =>{
                 </View>
             </View>
 
+            {selectedButton === 1 && <GlobalChats/>}
             {selectedButton === 2 && <LocalChats/>}
             
         </SafeAreaView>
