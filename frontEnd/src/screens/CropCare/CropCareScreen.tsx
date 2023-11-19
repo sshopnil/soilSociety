@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Title } from 'react-native-paper';
-import PostCard from '../../providers/PostCard';
+import PostCard from './providers/PostCard';
 
 
 const stack = createStackNavigator()
