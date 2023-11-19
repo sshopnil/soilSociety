@@ -5,7 +5,7 @@ interface PostCardProps {
   title: string;
   question: string;
   imageUrl: string;
-  navigation: any;
+  // navigation: any;
 }
 
 // const PostCard: React.FC<PostCardProps> = ({ title, question, imageUrl }) => {
