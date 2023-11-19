@@ -14,6 +14,7 @@ function DrawerNavigator() {
             screenOptions={{
                 drawerActiveBackgroundColor: "black",
                 drawerActiveTintColor: "white",
+                headerShown: false
             }}
             >
             <Drawer.Screen
