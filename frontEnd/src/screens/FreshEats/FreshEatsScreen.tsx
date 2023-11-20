@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView} from 'react-native';
 import SearchBar from "./components/SearchBar";
 import ResultDetail from "./components/ResultDetail";
 import ResultsList from "./components/ResultsList";
@@ -22,7 +22,8 @@ const FreshEatsScreen = () => {
             <Text style={styles.titleStyle}>FreshEats</Text>
             <View style={styles.viewStyle}>
                 <SearchBar term={term} onTermChange={seTerm} />
-                <ScrollView style={{marginBottom: 150}}>
+                <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <ResultsList 
                     results={results} 
                     title="Poultry" 
@@ -36,6 +37,7 @@ const FreshEatsScreen = () => {
                     title="Foods and vegetables" 
                 />
             </ScrollView>
+                </SafeAreaView>
             </View>
         </View>
     );
@@ -43,7 +45,7 @@ const FreshEatsScreen = () => {
 
 const styles = StyleSheet.create({
     titleStyle: {
-        paddingTop: 48,
+        paddingTop: 42,
         backgroundColor: '#1B1B1B',
         color: "#D8E9A8",
         fontSize: 30,
@@ -58,7 +60,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height:'100%',
         marginHorizontal: 5
-    }
+    },
+    container: {
+        flex: 1,
+        paddingTop: 10,
+        paddingBottom: 100
+      },
+      scrollView: {
+        marginHorizontal: 20,
+      },
 });
 
 export default FreshEatsScreen;
