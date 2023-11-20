@@ -7,9 +7,9 @@ import ResultsList from "./components/ResultsList";
 
 
 const results = [
-    {"prod_id" : 1, "name": "Item name 1","img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'},
-    {"prod_id" : 2, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'},
-    {"prod_id" : 3, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'}
+    {"prod_id" : 1, "rem_item": 50, "rating": 4.9, "name": "Item name 1","img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'},
+    {"prod_id" : 2,"rem_item": 48,  "rating": 4.5, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'},
+    {"prod_id" : 3, "rem_item": 88, "rating": 3.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600'}
 ];
 
 
@@ -18,7 +18,7 @@ const FreshEatsScreen = () => {
     const [term, seTerm] = useState('');
 
     return (
-        <View style={{backgroundColor: 'black', height: "100%"}}>
+        <View style={{backgroundColor: '#1B1B1B', height: "100%"}}>
             <Text style={styles.titleStyle}>FreshEats</Text>
             <View style={styles.viewStyle}>
                 <SearchBar term={term} onTermChange={seTerm} />
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
         backgroundColor: 'white',
-        height:'100%'
+        height:'100%',
+        marginHorizontal: 5
     }
 });
 

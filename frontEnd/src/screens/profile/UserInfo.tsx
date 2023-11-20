@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 const UserInfo = () =>{
     const navigation = useNavigation();
     return(
-        <View style={{backgroundColor: 'black', height: "100%"}}>
+        <View style={{backgroundColor: '#1B1B1B', height: "100%"}}>
             <Text style={styles.titleStyle}>My Profile</Text>
             <View style={styles.viewStyle}>
                 <Button title="Log out" onPress={()=> navigation.navigate('login')}/>
