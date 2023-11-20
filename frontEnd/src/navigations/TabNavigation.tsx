@@ -26,7 +26,7 @@ const TabNavigation = ()=>{
           tabBarInactiveTintColor: "grey",
           title:"Soil Society",
           headerPressOpacity: 5,
-          headerShown: false
+          headerShown: false,
         }}
       >
         <tabs.Screen 
