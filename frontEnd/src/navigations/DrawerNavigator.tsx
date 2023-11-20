@@ -14,14 +14,16 @@ function DrawerNavigator() {
             screenOptions={{
                 drawerActiveBackgroundColor: "black",
                 drawerActiveTintColor: "white",
-                headerShown: false
+                headerShown: false,
+                drawerType: "slide",
+                swipeEdgeWidth: 50
             }}
             >
             <Drawer.Screen
-                name="posts"
+                name="Soil Society"
                 component={TabNavigation}
                 options={{
-                    title: 'Soil Society'
+                    headerShown: false
                 }}
             />
 
