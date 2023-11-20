@@ -4,6 +4,9 @@ import TabNavigation from './TabNavigation';
 import ViewCartScreen from '../screens/FreshEats/ViewCartScreen';
 import ViewWishListScreen from '../screens/FreshEats/ViewWishListScreen';
 import ViewOrderScreen from '../screens/FreshEats/ViewOrderScreen';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+
 
 
 const Drawer = createDrawerNavigator();
@@ -16,7 +19,7 @@ function DrawerNavigator() {
                 drawerActiveTintColor: "white",
                 headerShown: false,
                 drawerType: "slide",
-                swipeEdgeWidth: 50
+                swipeEdgeWidth: 80
             }}
             >
             <Drawer.Screen
@@ -31,7 +34,8 @@ function DrawerNavigator() {
                 name="cart"
                 component={ViewCartScreen}
                 options={{
-                    title: 'Cart'
+                    title: 'Cart',
+                    drawerIcon: ({focused})=> <MaterialCommunityIcons name="cart-outline" size={24} color={focused ? "white": "black"} />
                 }}
             />
 
@@ -39,14 +43,16 @@ function DrawerNavigator() {
                 name="wishlist"
                 component={ViewWishListScreen}
                 options={{
-                    title: 'WishList'
+                    title: 'WishList',
+                    drawerIcon: ({focused})=> <Ionicons name="eye-outline" size={24} color={focused? "white": "black"} />
                 }}
             />
             <Drawer.Screen
                 name="orders"
                 component={ViewOrderScreen}
                 options={{
-                    title: 'Orders'
+                    title: 'Orders',
+                    drawerIcon: ({focused})=> <Ionicons name="ios-list-outline" size={24} color={focused ? "white": "black"} />
                 }}
             />
         </Drawer.Navigator>
