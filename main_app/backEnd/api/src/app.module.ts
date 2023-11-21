@@ -10,7 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     AuthModule, 
     FreshEatsProductsModule,
-    MongooseModule.forRoot('mongodb')
+    MongooseModule.forRoot('mongodb://localhost:27017/soilSociety')
   ],
   controllers: [AppController],
   providers: [AppService],
