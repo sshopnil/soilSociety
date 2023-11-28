@@ -21,10 +21,8 @@ const ResultDetail : React.FC<propTypes> = ({results}) => {
                 source={{ uri: results.img_src}} 
             />
             <Text style={styles.titleStyle}>{results.name}</Text>
-            <Entypo name="shopping-cart" size={24} color="black" style={styles.cartIcon} onPress={()=> console.log("added to cart")}/>
-            <TouchableOpacity style={styles.buyNowBtn}>
-                <Text style={{color: "#DDFF54", textAlign:"center"}}>Buy Now</Text>
-            </TouchableOpacity>
+            <Text style={styles.inStockTxt}>In stock: {results.rem_item}</Text>
+            <Text style={styles.ratingTxt}>Rating: {results.rating}</Text>
         </View>
     );
 };
@@ -33,24 +31,22 @@ const ResultDetail : React.FC<propTypes> = ({results}) => {
 const styles = StyleSheet.create({
     cardStyle: {
         height: 210,
-        width: 150,
+        width: 160,
         backgroundColor: 'white',
         borderRadius: 20,
         marginVertical: 10,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10
     },
-    buyNowBtn: {
-        bottom: 15,
-        backgroundColor: '#1B1B1B',
-        width: 80,
-        alignSelf: 'flex-end',
-        borderColor: 'green',
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 5
+    inStockTxt: {
+        fontSize: 12,
+        alignSelf: 'flex-start'
+    },
+    ratingTxt:{
+        fontSize: 12,
+        alignSelf: 'flex-start'
     },
     imageStyle: {
         width: "100%",
@@ -73,7 +69,7 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 5,
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 18
     },
     cartIcon:{
         top: 15,
@@ -82,8 +78,7 @@ const styles = StyleSheet.create({
     },
     titleStyle:{
         alignSelf: 'flex-start',
-        fontSize: 18,
-        fontWeight: 'bold'
+        fontSize: 16,
     }
 });
 

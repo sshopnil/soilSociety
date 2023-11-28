@@ -20,13 +20,13 @@ const TabNavigation = ()=>{
       <tabs.Navigator 
         initialRouteName="Posts"
         screenOptions={{
-          tabBarStyle:{backgroundColor: "black", alignItems: 'center'}, 
+          tabBarStyle:{backgroundColor: "#1B1B1B", alignItems: 'center', borderTopWidth: 0}, 
           tabBarShowLabel: false,
           tabBarActiveTintColor: '#E0FFB4',
           tabBarInactiveTintColor: "grey",
           title:"Soil Society",
           headerPressOpacity: 5,
-          headerShown: false
+          headerShown: false,
         }}
       >
         <tabs.Screen 
