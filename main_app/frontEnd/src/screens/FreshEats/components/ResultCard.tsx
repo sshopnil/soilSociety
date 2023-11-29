@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Entypo } from '@expo/vector-icons';
 
 
 interface propTypes{
@@ -8,12 +7,12 @@ interface propTypes{
 };
 
 
-const ResultDetail : React.FC<propTypes> = ({results}) => {
+const ResultCard : React.FC<propTypes> = ({results}) => {
     return (
         <View style={[styles.cardStyle, styles.shadowProp]}>
 
             <View style={styles.priceStyle}>
-                <Text style={styles.priceText}>$30</Text>
+                <Text style={styles.priceText}>{results.price}৳</Text>
             </View>
 
             <Image 
@@ -59,17 +58,17 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     priceStyle: {
-        backgroundColor: 'green',
+        backgroundColor: '#E0FFB4',
         borderRadius: 50,
         position: 'absolute',
         zIndex: 1,
         alignSelf: 'flex-start'
     },
     priceText: {
-        color: 'white',
+        color: 'black',
         padding: 5,
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 16
     },
     cartIcon:{
         top: 15,
@@ -83,4 +82,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ResultDetail;
+export default ResultCard;
