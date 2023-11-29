@@ -1,11 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState} from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
+import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, useToast, Box, Center} from "native-base";
+import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text} from "native-base";
 import { Entypo } from '@expo/vector-icons';
-
+import { AntDesign } from '@expo/vector-icons';
 
 const results = [
     { "price": 30, "prod_id": 1, "rem_item": 50, "rating": 4.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
@@ -28,23 +28,34 @@ const ResultDetails = () => {
 
     // console.log(parameters);
     return (
-        <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
+        <NativeBaseProvider>
+            <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
             <Text style={styles.titleStyle}>Product Details</Text>
             <View style={styles.viewStyle}>
                 <SafeAreaView style={styles.container}>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        <NativeBaseProvider>
+                        
                         <View style={styles.imageViewStyle}>
                             <Image style={styles.imageStyle} source={{ uri: thisItem?.img_src }} />
                         </View>
                         <Text style={styles.priceText}>{thisItem?.price}৳</Text>
-                        <View style={styles.MainInfo}>
-                            <Text style={styles.itemTitle}>{thisItem?.name}</Text>
-                            <TouchableOpacity style={styles.WatchList}>
-                                <Ionicons name="eye-outline" size={24} color="black" />
-                                <Text>Add to watchlist</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Box flexDirection={'row'}>
+                        <Text style={styles.itemTitle} flex={.5}>{thisItem?.name}</Text>
+                        <Button 
+                                leftIcon={<Icon as={AntDesign}  name="eye" size="sm" />} 
+                                style={{flex: .5}}
+                                variant={'outline'}
+                                colorScheme={'blueGray'}
+                                size={'sm'}
+                                flex={.5}
+                                marginX={6}
+                                alignSelf={'center'}
+                                justifyContent={'center'}
+                                onPress={()=> console.log('added watchlist')}
+                            >
+                                ADD TO WATCHLIST
+                            </Button>
+                        </Box>
                         <View style={styles.MainInfo}>
                             <Text style={styles.itemTitle}>Ratings</Text>
                             <StarRatingDisplay rating={thisItem.rating} style={styles.ratingStar} />
@@ -89,11 +100,11 @@ const ResultDetails = () => {
                     </Button>
                         }
                         </View>
-                        </NativeBaseProvider>
                     </ScrollView>
                 </SafeAreaView>
             </View>
         </View>
+        </NativeBaseProvider>
     );
 };
 
@@ -105,8 +116,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: 5,
-        paddingBottom: 100
+        paddingTop: 10,
+        paddingBottom: 90
     },
     descBox: {
         padding: 20,

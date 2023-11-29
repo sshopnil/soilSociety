@@ -29,8 +29,8 @@ const ResultCard : React.FC<propTypes> = ({results}) => {
 
 const styles = StyleSheet.create({
     cardStyle: {
-        height: 210,
-        width: 160,
+        height: 150,
+        width: "90%",
         backgroundColor: 'white',
         borderRadius: 20,
         marginVertical: 10,
@@ -40,17 +40,17 @@ const styles = StyleSheet.create({
         padding: 10
     },
     inStockTxt: {
-        fontSize: 12,
+        fontSize: 10,
         alignSelf: 'flex-start'
     },
     ratingTxt:{
-        fontSize: 12,
+        fontSize: 10,
         alignSelf: 'flex-start'
     },
     imageStyle: {
         width: "100%",
         borderRadius: 5,
-        height: 120,
+        height: 80,
         marginBottom: 5,
         alignSelf: 'center'
     },
