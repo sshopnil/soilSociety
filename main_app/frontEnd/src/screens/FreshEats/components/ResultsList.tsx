@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import ResultDetail from "./ResultDetail";
 import { useNavigation} from "@react-navigation/native";
+import ResultCard from "./ResultCard";
 
 
 interface propTypes{
@@ -26,7 +26,9 @@ const ResultsList : React.FC<propTypes> = ({results, title}) =>{
                 keyExtractor={(res)=> res.prod_id}
                 renderItem={({item})=>{
                     return (
-                        <ResultDetail results={item}/>
+                        <TouchableOpacity onPress={()=> navigation.navigate('product-details', {id: item.prod_id})}>
+                            <ResultCard results={item}/>
+                        </TouchableOpacity>
                     );
                 }}
                 style={styles.listStyle}
