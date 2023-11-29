@@ -11,7 +11,7 @@ const CancelledOrderShow : React.FC<info>= ({orderInfo}) =>{
     const [sellerInfo, setSellerInfo] = useState(null);
     return(
         <View>
-            <OrderTable data={orderInfo} orderID={sellerInfo}/>
+            <OrderTable data={orderInfo} orderID={setSellerInfo}/>
         </View>
     );
 };
