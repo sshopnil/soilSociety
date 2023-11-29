@@ -20,6 +20,7 @@ function DrawerNavigator() {
                 headerShown: false,
                 drawerType: "slide",
                 swipeEdgeWidth: 80
+                  
             }}
             >
             <Drawer.Screen
