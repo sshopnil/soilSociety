@@ -1,9 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState} from "react";
-import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
+import React, { useState } from "react";
+import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text} from "native-base";
+import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text, IconButton } from "native-base";
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -19,9 +19,15 @@ const ResultDetails = () => {
     const navigation = useNavigation();
     const thisItem = results.find((item) => item.prod_id == parameters.id);
     const [cartStatus, setCart] = useState(false);
+    const [Oqty, setOqty] = useState(1);
 
-
-    const handleCartBtn=()=>{
+    const handleIncrease =()=>{
+        setOqty(Oqty + 1);
+    }
+    const handleDecrease =()=>{
+        setOqty(Oqty - 1);
+    }
+    const handleCartBtn = () => {
         setCart(true);
     }
     // console.log(thisItem);
@@ -30,80 +36,89 @@ const ResultDetails = () => {
     return (
         <NativeBaseProvider>
             <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
-            <Text style={styles.titleStyle}>Product Details</Text>
-            <View style={styles.viewStyle}>
-                <SafeAreaView style={styles.container}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        
-                        <View style={styles.imageViewStyle}>
-                            <Image style={styles.imageStyle} source={{ uri: thisItem?.img_src }} />
-                        </View>
-                        <Text style={styles.priceText}>{thisItem?.price}৳</Text>
-                        <Box flexDirection={'row'}>
-                        <Text style={styles.itemTitle} flex={.5}>{thisItem?.name}</Text>
-                        <Button 
-                                leftIcon={<Icon as={AntDesign}  name="eye" size="sm" />} 
-                                style={{flex: .5}}
-                                variant={'outline'}
-                                colorScheme={'blueGray'}
-                                size={'sm'}
-                                flex={.5}
-                                marginX={6}
-                                alignSelf={'center'}
-                                justifyContent={'center'}
-                                onPress={()=> console.log('added watchlist')}
-                            >
-                                ADD TO WATCHLIST
-                            </Button>
-                        </Box>
-                        <View style={styles.MainInfo}>
-                            <Text style={styles.itemTitle}>Ratings</Text>
-                            <StarRatingDisplay rating={thisItem.rating} style={styles.ratingStar} />
-                        </View>
-                        <View style={styles.descBox}>
-                            <Text style={styles.descrTitle}>Description: </Text>
-                            <Text>{thisItem?.description}</Text>
-                        </View>
-                        <View style={styles.MainInfo}>
-                            <Button 
-                                leftIcon={<Icon as={Entypo}  name="shopping-bag" size="sm" />} 
-                                style={{flex: .5}}
-                                variant={'outline'}
-                                colorScheme={'blueGray'}
-                                onPress={()=> navigation.navigate('order-item', {name: thisItem?.name, price: thisItem?.price})}
-                            >
-                                Buy Now
-                            </Button>
-                            {cartStatus
-                            ? <Button 
-                            leftIcon={<Icon as={Entypo}  name="shopping-cart" size="sm" />} 
-                            style={{flex: .5}}
-                            variant={'ghost'}
-                            colorScheme={'danger'}
-                            onPress={handleCartBtn}
-                            isDisabled={true}
+                <Text style={styles.titleStyle}>Product Details</Text>
+                <View style={styles.viewStyle}>
+                    <SafeAreaView style={styles.container}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
 
-                            
-                        >
-                            Added to cart
-                        </Button>
+                            <View style={styles.imageViewStyle}>
+                                <Image style={styles.imageStyle} source={{ uri: thisItem?.img_src }} />
+                            </View>
+                            <Text style={styles.priceText}>{thisItem?.price}৳</Text>
+                            <Box flexDirection={'row'}>
+                                <Text style={styles.itemTitle} flex={.5}>{thisItem?.name}</Text>
+                                <Button
+                                    leftIcon={<Icon as={AntDesign} name="eye" size="sm" />}
+                                    style={{ flex: .5 }}
+                                    variant={'outline'}
+                                    colorScheme={'blueGray'}
+                                    size={'sm'}
+                                    flex={.5}
+                                    marginX={6}
+                                    alignSelf={'center'}
+                                    justifyContent={'center'}
+                                    onPress={() => console.log('added watchlist')}
+                                >
+                                    ADD TO WATCHLIST
+                                </Button>
+                            </Box>
+                            <View style={styles.MainInfo}>
+                                <Text style={styles.itemTitle}>Ratings</Text>
+                                <StarRatingDisplay rating={thisItem.rating} style={styles.ratingStar} />
+                            </View>
+                            <View style={styles.descBox}>
+                                <Text style={styles.descrTitle}>Description: </Text>
+                                <Text>{thisItem?.description}</Text>
+                            </View>
 
-                        : <Button 
-                        leftIcon={<Icon as={Entypo}  name="shopping-cart" size="sm" />} 
-                        style={{flex: .5}}
-                        variant={'outline'}
-                        colorScheme={'amber'}
-                        onPress={handleCartBtn}
-                        
-                    >
-                        Add to cart
-                    </Button>
-                        }
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
+                            <Box justifyContent={'center'} flexDirection={'row'} my={10}>
+                            <Text style={{fontSize: 16, alignSelf: 'center'}}>QTY: </Text>
+                                {/* increase btn  */}
+                            <IconButton icon={<Icon as={Entypo} name="minus" />} size={'sm'} isDisabled={Oqty == 0? true: false} onPress={handleDecrease}/>
+                            <Text style={{fontSize: 16, alignSelf: 'center'}}>{Oqty}</Text>
+                            <IconButton icon={<Icon as={Entypo} name="plus" />} size={'sm'} isDisabled={thisItem?.rem_item  == Oqty? true: false} onPress={handleIncrease}/>
+                                {/* increase btn  */}
+                            </Box>
+                            <View style={styles.MainInfo}>
+                                <Button
+                                    leftIcon={<Icon as={Entypo} name="shopping-bag" size="sm" />}
+                                    style={{ flex: .5 }}
+                                    variant={'outline'}
+                                    colorScheme={'blueGray'}
+                                    onPress={() => navigation.navigate('order-item', { name: thisItem?.name, price: thisItem?.price, qty: Oqty})}
+                                >
+                                    Buy Now
+                                </Button>
+                                {cartStatus
+                                    ? <Button
+                                        leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
+                                        style={{ flex: .5 }}
+                                        variant={'ghost'}
+                                        colorScheme={'danger'}
+                                        onPress={handleCartBtn}
+                                        isDisabled={true}
+
+
+                                    >
+                                        Added to cart
+                                    </Button>
+
+                                    : <Button
+                                        leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
+                                        style={{ flex: .5 }}
+                                        variant={'outline'}
+                                        colorScheme={'amber'}
+                                        onPress={handleCartBtn}
+
+                                    >
+                                        Add to cart
+                                    </Button>
+                                }
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                </View>
             </View>
-        </View>
         </NativeBaseProvider>
     );
 };
