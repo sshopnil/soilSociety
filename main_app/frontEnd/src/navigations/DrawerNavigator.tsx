@@ -1,13 +1,14 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabNavigation from './TabNavigation';
-import ViewCartScreen from '../screens/FreshEats/ViewCartScreen';
-import ViewWishListScreen from '../screens/FreshEats/ViewWishListScreen';
-import ViewOrderScreen from '../screens/FreshEats/ViewOrderScreen';
+import ViewCartScreen from '../screens/FreshEats/cow/ViewCartScreen';
+import ViewWishListScreen from '../screens/FreshEats/cow/ViewWishListScreen';
+import ViewOrderScreen from '../screens/FreshEats/cow/ViewOrderScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-
-
+import BSellerScreen from '../screens/FreshEats/sellerEnd/BSellerScreen';
+import SellerSection from '../screens/FreshEats/sellerEnd/SellerSection';
+import { Feather } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,7 +31,15 @@ function DrawerNavigator() {
                     headerShown: false
                 }}
             />
-
+            
+            <Drawer.Screen
+                name="bseller"
+                component={BSellerScreen}
+                options={{
+                    title: 'Become a seller',
+                    drawerIcon: ({focused})=> <Ionicons name="man-outline" size={24} color={focused ? "white": "black"} />
+                }}
+            />
             <Drawer.Screen
                 name="cart"
                 component={ViewCartScreen}
@@ -54,6 +63,14 @@ function DrawerNavigator() {
                 options={{
                     title: 'Orders',
                     drawerIcon: ({focused})=> <Ionicons name="ios-list-outline" size={24} color={focused ? "white": "black"} />
+                }}
+            />
+            <Drawer.Screen
+                name="seller-section"
+                component={SellerSection}
+                options={{
+                    title: 'Seller section',
+                    drawerIcon: ({focused})=> <Feather name="command" size={24} color={focused ? "white": "black"} />
                 }}
             />
         </Drawer.Navigator>

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         height: 150,
         width: "90%",
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 10,
         marginVertical: 10,
         marginHorizontal: 10,
         justifyContent: 'space-between',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         color: 'black',
         padding: 5,
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 12
     },
     cartIcon:{
         top: 15,
