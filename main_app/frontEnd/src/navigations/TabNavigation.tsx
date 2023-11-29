@@ -1,16 +1,14 @@
 import React from 'react';
 import { StyleSheet} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FreshEatsScreen from '../screens/FreshEats/FreshEatsScreen';
+// import FreshEatsScreen from '../screens/FreshEats/FreshEatsScreen';
 import CropCareScreen from '../screens/CropCare/CropCareScreen';
 import PostScreen from '../screens/Posts/PostScreen';
 import GchatsScreen from '../screens/Gchats/GchatsScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import UserInfo from '../screens/profile/UserInfo';
-import ViewCartScreen from '../screens/FreshEats/ViewCartScreen';
-import { Zocial } from '@expo/vector-icons';
-import DrawerNavigator from './DrawerNavigator';
+import FreshEatsStack from '../screens/FreshEats/navigations/FreshEatsStack';
 
 const tabs = createBottomTabNavigator();
 
@@ -51,7 +49,7 @@ const TabNavigation = ()=>{
         />
         <tabs.Screen 
           name="Fresh Eats" 
-          component={FreshEatsScreen}
+          component={FreshEatsStack}
           options={{
             tabBarIcon: ({focused})=> <MaterialCommunityIcons name={focused ? "cart": "cart-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
             tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},

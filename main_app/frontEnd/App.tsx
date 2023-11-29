@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './src/navigations/AuthNavigator';
 import 'react-native-gesture-handler';
 
-
 const App = ()=>{
 
   return (
