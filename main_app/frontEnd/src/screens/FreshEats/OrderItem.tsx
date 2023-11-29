@@ -22,7 +22,7 @@ const OrderItem = () => {
                             <View style={styles.Tablecontainer}>
                                 <DataTableComponent data={[parameters]}/>
                             </View>
-                            <Text style={{ marginLeft: 25, fontWeight: 'bold', fontSize: 16 }}>Total: {parameters?.price}৳ {'(Only Cash On Delivery Available)'}</Text>
+                            <Text style={{ marginLeft: 25, fontWeight: 'bold', fontSize: 16 }}>Total: {parameters?.price * parameters?.qty}৳ {'(Only Cash On Delivery Available)'}</Text>
                             <View style={styles.addressStyle}>
                                 <Box>
                                     <Text bold fontSize="xl" mb="4">
