@@ -1,9 +1,9 @@
-import { useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState} from "react";
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, VStack } from "native-base";
+import { Button, Icon, NativeBaseProvider, useToast, Box, Center} from "native-base";
 import { Entypo } from '@expo/vector-icons';
 
 
@@ -15,11 +15,16 @@ const results = [
 
 const ResultDetails = () => {
     const parameters = useRoute().params;
-
-
+    const toast = useToast();
+    const navigation = useNavigation();
     const thisItem = results.find((item) => item.prod_id == parameters.id);
+    const [cartStatus, setCart] = useState(false);
 
-    console.log(thisItem);
+
+    const handleCartBtn=()=>{
+        setCart(true);
+    }
+    // console.log(thisItem);
 
     // console.log(parameters);
     return (
@@ -54,17 +59,35 @@ const ResultDetails = () => {
                                 style={{flex: .5}}
                                 variant={'outline'}
                                 colorScheme={'blueGray'}
+                                onPress={()=> navigation.navigate('order-item', {name: thisItem?.name, price: thisItem?.price})}
                             >
                                 Buy Now
                             </Button>
-                            <Button 
-                                leftIcon={<Icon as={Entypo}  name="shopping-cart" size="sm" />} 
-                                style={{flex: .5}}
-                                variant={'outline'}
-                                colorScheme={'amber'}
-                            >
-                                Add to cart
-                            </Button>
+                            {cartStatus
+                            ? <Button 
+                            leftIcon={<Icon as={Entypo}  name="shopping-cart" size="sm" />} 
+                            style={{flex: .5}}
+                            variant={'ghost'}
+                            colorScheme={'danger'}
+                            onPress={handleCartBtn}
+                            isDisabled={true}
+
+                            
+                        >
+                            Added to cart
+                        </Button>
+
+                        : <Button 
+                        leftIcon={<Icon as={Entypo}  name="shopping-cart" size="sm" />} 
+                        style={{flex: .5}}
+                        variant={'outline'}
+                        colorScheme={'amber'}
+                        onPress={handleCartBtn}
+                        
+                    >
+                        Add to cart
+                    </Button>
+                        }
                         </View>
                         </NativeBaseProvider>
                     </ScrollView>
