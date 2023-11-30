@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState} from "react";
+import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView} from 'react-native';
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 
