@@ -5,6 +5,7 @@ import ForgotPass from '../screens/Auth/ForgotPass';
 import RegisterScreen from '../screens/Auth/RegisterScreen';
 import DrawerNavigator from './DrawerNavigator';
 import TabNavigation from './TabNavigation';
+import Chatting from '../screens/Gchats/Chatting';
 
 
 
@@ -59,6 +60,7 @@ function AuthNavigator() {
         component={DrawerNavigator}
         options={{headerShown:false}}
       />
+      
     </Stack.Navigator>
   );
 }

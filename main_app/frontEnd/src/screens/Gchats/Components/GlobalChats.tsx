@@ -36,6 +36,8 @@ const GlobalChats = () => {
     setInputText('');
   };
 
+  
+
   const getAPIData = async () => {
     try {
       const url = 'https://simple-books-api.glitch.me/books';
