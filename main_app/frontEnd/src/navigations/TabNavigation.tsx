@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import UserInfo from '../screens/profile/UserInfo';
 import FreshEatsStack from '../screens/FreshEats/navigations/FreshEatsStack';
+import GChatsStack from '../screens/Gchats/Components/GChatsStack';
 
 const tabs = createBottomTabNavigator();
 
@@ -58,7 +59,7 @@ const TabNavigation = ()=>{
         />
         <tabs.Screen 
           name="GChats" 
-          component={GchatsScreen}
+          component={GChatsStack}
           options={{
             tabBarIcon: ({focused})=> <MaterialCommunityIcons name={focused ? "chat": "chat-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
             tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
