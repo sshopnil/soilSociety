@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Image, RefreshControl } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  RefreshControl,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 interface Book {
@@ -13,6 +22,21 @@ const GlobalChats = () => {
   const [data, setData] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [inputText, setInputText] = useState('');
+
+  const handleInputChange = (text: string) => {
+    setInputText(text);
+  };
+
+  const handleSendMessage = () => {
+    
+    console.log('Sending message:', inputText);// logic to send msg
+
+    
+    setInputText('');
+  };
+
+  
 
   const getAPIData = async () => {
     try {
@@ -51,7 +75,8 @@ const GlobalChats = () => {
         overlayColor="rgba(0, 0, 0, 0.6)"
       />
       <FlatList
-        data={data}
+        style={styles.flatList}
+        data={data.slice(0,20).reverse()}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
@@ -69,10 +94,23 @@ const GlobalChats = () => {
             </View>
           </View>
         )}
+        onEndReached={handleRefresh}
+        onEndReachedThreshold={0.1}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
       />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type your message..."
+          value={inputText}
+          onChangeText={handleInputChange}
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
+          <Text style={styles.sendButtonText}>Send</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -81,6 +119,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
+    backgroundColor: '#1B1B1B',
+  },
+  flatList: {
+    flex: 1,
   },
   itemContainer: {
     borderBottomWidth: 3,
@@ -116,6 +158,34 @@ const styles = StyleSheet.create({
   loadingText: {
     color: '#FEFEFE',
     fontSize: 18,
+    fontWeight: '700',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 14,
+    backgroundColor: '#1B1B1B',
+  },
+  input: {
+    flex: 1,
+    height: 45,
+    borderWidth: 0,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    marginLeft: 12,
+    backgroundColor: '#FEFEFE',
+    alignItems: 'center',
+  },
+  sendButton: {
+    marginLeft: 10,
+    backgroundColor: '#64ABBC',
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginRight: 12,
+  },
+  sendButtonText: {
+    color: '#FEFEFE',
     fontWeight: '700',
   },
 });
