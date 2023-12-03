@@ -44,7 +44,7 @@ const ViewOrderScreen = () => {
                     >
                         <Text style={{
                             color: selectedButton === 1 ? '#FEFEFE' : '#1B1B1B',
-                            textAlign: 'center',
+                            textAlign: 'center'
                         }}> Pending </Text>
 
                     </TouchableOpacity>
@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
         height: 46,
         flexShrink: 0,
         marginBottom: 8,
-        marginLeft: 20,
-        marginRight: 20,
+        alignSelf:'center',
         borderRadius: 20,
         paddingTop: 3,
         flexDirection: 'row',
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         alignSelf: 'stretch',
-        marginRight: 8
     }
 });
 
