@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         fontWeight: "700",
         paddingLeft: 20,
-        paddingVertical: 20
+        paddingVertical: 20,
     },
     viewStyle: {
         borderTopStartRadius: 20,
