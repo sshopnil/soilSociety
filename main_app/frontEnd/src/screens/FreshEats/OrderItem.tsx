@@ -5,13 +5,20 @@ import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
 import { Text, FormControl, Input, Divider, NativeBaseProvider, useTheme, Box, Button, Checkbox} from "native-base";
 import DataTableComponent from "./components/DataTable";
+import { useShoppingCart } from "./providers/CartContext";
 
 
 
 const OrderItem = () => {
     const parameters = useRoute().params;
     // console.log(parameters);
+    const {cart, removeAll} = useShoppingCart();
     const navigator = useNavigation();
+    let totalPrice = 0;
+    if(cart.length > 0)
+    {
+        cart.map(item=> totalPrice += item.price * item.qty);
+    }
     return (
         <NativeBaseProvider>
             <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
@@ -20,9 +27,23 @@ const OrderItem = () => {
                     <SafeAreaView style={styles.container}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View style={styles.Tablecontainer}>
-                                <DataTableComponent data={[parameters]}/>
+                                {parameters.name !== null ?
+                                    <DataTableComponent data={[parameters]}/>
+                                    :
+                                    <DataTableComponent data={cart}/>
+                                }
                             </View>
-                            <Text style={{ marginLeft: 25, fontWeight: 'bold', fontSize: 16 }}>Total: {parameters?.price * parameters?.qty}৳ {'(Only Cash On Delivery Available)'}</Text>
+                            { parameters.name !== null ?
+                                <Text 
+                                    style={{ marginLeft: 25, fontWeight: 'bold', fontSize: 16 }}>
+                                        Total: {parameters?.price * parameters?.qty}৳ {'(Only Cash On Delivery Available)'}
+                                </Text>
+                                :
+                                <Text 
+                                    style={{ marginLeft: 25, fontWeight: 'bold', fontSize: 16 }}>
+                                        Total: {totalPrice}৳ {'(Only Cash On Delivery Available)'}
+                                </Text>
+                            }
                             <View style={styles.addressStyle}>
                                 <Box>
                                     <Text bold fontSize="xl" mb="4">
@@ -48,7 +69,7 @@ const OrderItem = () => {
                                 </Box>
                             </View>
                             <Box flexDirection={'row'} mt={5}>
-                            <Button variant={'subtle'} colorScheme={'success'} flex={.5} onPress={()=> navigator.navigate('order-success')}>Place Order</Button>
+                            <Button variant={'subtle'} colorScheme={'success'} flex={.5} onPress={()=> {navigator.navigate('order-success'); removeAll()}}>Place Order</Button>
                             <Button variant={'subtle'} colorScheme={'danger'} flex={.5} onPress={()=> navigator.navigate('fhome')}>Cancel Order</Button>
                             </Box>
                         </ScrollView>

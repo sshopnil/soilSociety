@@ -1,9 +1,8 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState, useEffect} from "react";
 import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text, IconButton } from "native-base";
+import { Button, Icon, NativeBaseProvider, Box, Center, Text, IconButton } from "native-base";
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { CartItem } from "./providers/CartContext";
@@ -18,12 +17,9 @@ const results = [
 
 const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
     const parameters = useRoute().params;
-    const toast = useToast();
     const navigation = useNavigation();
     const thisItem = results.find((item) => item.prod_id == parameters.id);
-    const [cartStatus, setCart] = useState(false);
     const [Oqty, setOqty] = useState(1);
-    const [cartItems, setCartItems] = useState<any>();
     const {addToCart, cart, removeFromCart} = useShoppingCart();
 
 
@@ -36,10 +32,10 @@ const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
 
 
 
-    useEffect(()=> {
-        console.log(cart);
-        console.log(cart.find(item => item.id == thisItem?.prod_id) === undefined);
-    },[]);
+    // useEffect(()=> {
+    //     console.log(cart);
+    //     console.log(cart.find(item => item.id == thisItem?.prod_id) === undefined);
+    // },[]);
 
 
     const handleCartBtn = () => {
@@ -48,7 +44,8 @@ const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
             id: thisItem?.prod_id,
             name: thisItem?.name,
             price: thisItem?.price,
-            qty: Oqty
+            qty: Oqty,
+            img_src: thisItem?.img_src
         }
         addToCart(item);
     }

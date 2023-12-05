@@ -7,12 +7,14 @@ export interface CartItem {
   name: string;
   price: number;
   qty: number;
+  img_src: string;
 }
 
 interface ShoppingCartContextProps {
     cart: CartItem[];
     addToCart: (item: CartItem) => void;
     removeFromCart: (itemId: number) => void;
+    removeAll: ()=> void;
   }
 
 
@@ -40,10 +42,15 @@ const ShoppingCartProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
   };
 
+  const removeAll = ()=>{
+    setCart([]);
+  }
+
   const contextValue: ShoppingCartContextProps = {
     cart,
     addToCart,
     removeFromCart,
+    removeAll,
   };
 
   return <ShoppingCartContext.Provider value={contextValue}>{children}</ShoppingCartContext.Provider>;
