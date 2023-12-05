@@ -1,11 +1,13 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text, IconButton } from "native-base";
+import { Button, Icon, NativeBaseProvider, Box, Center, Text, IconButton } from "native-base";
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { CartItem } from "./providers/CartContext";
+import { useShoppingCart } from "./providers/CartContext";
+  
 
 const results = [
     { "price": 30, "prod_id": 1, "rem_item": 50, "rating": 4.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
@@ -13,13 +15,13 @@ const results = [
     { "price": 100, "prod_id": 3, "rem_item": 88, "rating": 3.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." }
 ];
 
-const ResultDetails = () => {
+const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
     const parameters = useRoute().params;
-    const toast = useToast();
     const navigation = useNavigation();
     const thisItem = results.find((item) => item.prod_id == parameters.id);
-    const [cartStatus, setCart] = useState(false);
     const [Oqty, setOqty] = useState(1);
+    const {addToCart, cart, removeFromCart} = useShoppingCart();
+
 
     const handleIncrease =()=>{
         setOqty(Oqty + 1);
@@ -27,12 +29,30 @@ const ResultDetails = () => {
     const handleDecrease =()=>{
         setOqty(Oqty - 1);
     }
-    const handleCartBtn = () => {
-        setCart(true);
-    }
-    // console.log(thisItem);
 
-    // console.log(parameters);
+
+
+    // useEffect(()=> {
+    //     console.log(cart);
+    //     console.log(cart.find(item => item.id == thisItem?.prod_id) === undefined);
+    // },[]);
+
+
+    const handleCartBtn = () => {
+        // setCart(true);
+        const item = {
+            id: thisItem?.prod_id,
+            name: thisItem?.name,
+            price: thisItem?.price,
+            qty: Oqty,
+            img_src: thisItem?.img_src
+        }
+        addToCart(item);
+    }
+
+    const handleRemoveCartBtn = ()=>{
+        removeFromCart(thisItem?.prod_id);
+    }
     return (
         <NativeBaseProvider>
             <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
@@ -89,18 +109,15 @@ const ResultDetails = () => {
                                 >
                                     Buy Now
                                 </Button>
-                                {cartStatus
+                                {cart.find(item => item.id == thisItem?.prod_id) !== undefined
                                     ? <Button
                                         leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
                                         style={{ flex: .5 }}
                                         variant={'ghost'}
                                         colorScheme={'danger'}
-                                        onPress={handleCartBtn}
-                                        isDisabled={true}
-
-
+                                        onPress={handleRemoveCartBtn}
                                     >
-                                        Added to cart
+                                        Remove From Cart
                                     </Button>
 
                                     : <Button
@@ -132,7 +149,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 10,
-        paddingBottom: 90
+        paddingBottom: 100
     },
     descBox: {
         padding: 20,
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     titleStyle: {
-        paddingTop: 42,
+        paddingTop: 56,
         backgroundColor: '#1B1B1B',
         color: "#D8E9A8",
         fontSize: 30,
