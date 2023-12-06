@@ -1,17 +1,21 @@
+import { useNavigation } from "@react-navigation/native";
 import { Badge, VStack } from "native-base";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 interface cardInfo {
     title: string,
-    notify: number
+    notify: number,
+    goto: string
 }
 
 
 
-const SellerActionCard: React.FC<cardInfo> = ({ title, notify }) => {
+const SellerActionCard: React.FC<cardInfo> = ({ title, notify, goto }) => {
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity style={[styles.boxStyle, styles.shadowProp]}>
+        <TouchableOpacity style={[styles.boxStyle, styles.shadowProp]} onPress={()=> navigation.navigate('seller', {screen: goto})}>
                 <VStack>
                     {notify != 0 && <Badge // bg="red.400"
                         colorScheme="danger" rounded="full" mb={-4} mr={-4} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
