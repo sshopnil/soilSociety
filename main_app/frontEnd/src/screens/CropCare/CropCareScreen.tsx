@@ -15,6 +15,7 @@ flow:
       button 2 - Discs
     Container
       posts
+    Button-floating
 */
 const stack = createStackNavigator()
 
@@ -35,23 +36,29 @@ const CropCareScreen = () =>{
 
   return(
     <View style={styles.mainContainer}>
-      <Text style={styles.title}>Crop Care Screen</Text>
-      
-      <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleButton1Press}>
-            <Text style={styles.buttonText}>Tips</Text>
-          </TouchableOpacity>
+      <Text style={styles.titleStyle}>Crop Care</Text>
+      <View style={styles.viewStyle}>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={handleButton1Press}>
+              <Text style={styles.buttonText}>Tips</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={handleButton2Press}>
-            <Text style={styles.buttonText}>Discussions</Text>
-          </TouchableOpacity>
-      </View>
+            <TouchableOpacity style={styles.button} onPress={handleButton2Press}>
+              <Text style={styles.buttonText}>Discussions</Text>
+            </TouchableOpacity>
+        </View>
 
-      <View style={styles.postContainer}>
-        {showContainerTips && <ContainerTips/>}
-        {showContainerDiscs && <ContainerDiscs/>}
-      </View>
-      
+        <View style={styles.postContainer}>
+          {showContainerTips && <ContainerTips/>}
+          {showContainerDiscs && <ContainerDiscs/>}
+        </View>
+
+        <View style={styles.floatButton}>
+          <TouchableOpacity>
+            <Text>+</Text>
+          </TouchableOpacity>
+        </View>
+      </View> 
     </View>
   );
 };
@@ -59,9 +66,24 @@ const CropCareScreen = () =>{
 
 const styles = StyleSheet.create({
   mainContainer: {
-    margin: 10,
-    marginTop: 40,
-    backgroundColor: '#E4FFF9',
+    backgroundColor: '#1B1B1B',
+  },
+
+  titleStyle: {
+    paddingTop: 42,
+    color: "#D8E9A8",
+    fontSize: 30,
+    fontStyle: "normal",
+    fontWeight: "700",
+    paddingLeft: 20,
+    paddingVertical: 20
+  },
+  viewStyle: {
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: 'white',
+    height: '100%',
+    marginHorizontal: 5
   },
 
   // button design
@@ -71,6 +93,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     backgroundColor: '#76FEC5',
+    opacity: 1,
   },
   button: {
     alignItems: 'center',
@@ -80,14 +103,15 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     opacity: 1,
     elevation: 3,
-    backgroundColor: 'green',
+    backgroundColor: '#1B1B1B',
+    margin: 10,
   },
   buttonText:{
     fontSize: 15,
-    color: "#fff",
     fontWeight: "bold",
     alignSelf: "center",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    color: "#D8E9A8",
   },
 
   // post card design
@@ -107,6 +131,19 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 8,
   },
+
+  // float button
+  floatButton:{
+    position: 'absolute',
+    top: '70%',
+    left: '80%',
+    backgroundColor: "#D8E9A8",
+    // justifyContent: 'center',
+    textAlign: 'center',
+    height: 50,
+    width: 50,
+    borderRadius: 15,
+  }
 });
 
 export default CropCareScreen;

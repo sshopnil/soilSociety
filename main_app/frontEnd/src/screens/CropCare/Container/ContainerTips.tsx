@@ -1,8 +1,11 @@
 import React from 'react';
 import PostCard from '../../../providers/PostCard';
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ContainerTips = () =>{
+  const navigation = useNavigation();
+
     return(
       <View>
         <View style={styles.postContainer}>
