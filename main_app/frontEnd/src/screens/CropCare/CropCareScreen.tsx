@@ -5,13 +5,15 @@ import { Title } from 'react-native-paper';
 import PostCard from '../../providers/PostCard';
 import { black, green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { filterConfig } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
-
+import ContainerTips from './Container/ContainerTips';
+import ContainerDiscs from './Container/ContainerDiscs';
 /*
 flow:
   mainContainer
     buttonContainer
-      button
-    postContainer
+      button 1 - Tips
+      button 2 - Discs
+    Container
       posts
 */
 const stack = createStackNavigator()
@@ -36,22 +38,20 @@ const CropCareScreen = () =>{
       <Text style={styles.title}>Crop Care Screen</Text>
       
       <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={()=>0}>
+          <TouchableOpacity style={styles.button} onPress={handleButton1Press}>
             <Text style={styles.buttonText}>Tips</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={()=>0}>
+          <TouchableOpacity style={styles.button} onPress={handleButton2Press}>
             <Text style={styles.buttonText}>Discussions</Text>
           </TouchableOpacity>
       </View>
-      
+
       <View style={styles.postContainer}>
-        <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-            imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
-        
-        <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-            imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+        {showContainerTips && <ContainerTips/>}
+        {showContainerDiscs && <ContainerDiscs/>}
       </View>
+      
     </View>
   );
 };
