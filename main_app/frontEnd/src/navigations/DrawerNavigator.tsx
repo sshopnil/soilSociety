@@ -9,10 +9,12 @@ import { Ionicons } from '@expo/vector-icons';
 import BSellerScreen from '../screens/FreshEats/sellerEnd/BSellerScreen';
 import SellerSection from '../screens/FreshEats/sellerEnd/SellerSection';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
 function DrawerNavigator() {
+
     return (
         <Drawer.Navigator
             screenOptions={{
