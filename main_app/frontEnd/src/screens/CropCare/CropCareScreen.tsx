@@ -1,48 +1,101 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Title } from 'react-native-paper';
 import PostCard from '../../providers/PostCard';
+import { black, green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { filterConfig } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
 
-
+/*
+flow:
+  mainContainer
+    buttonContainer
+      button
+    postContainer
+      posts
+*/
 const stack = createStackNavigator()
 
+// start
 const CropCareScreen = () =>{
-    return(
-        <View>
-            <Text style={styles.title}>Crop Care Screen</Text>
-            
-            <View>
-                <Text>Tips</Text>
-                <Text>Discussion</Text>
-            </View>
-            
-            <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
-            
-            <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
-        </View>
-    );
+  const [showContainerTips, setContainerTips] = useState(false);
+  const [showContainerDiscs, setContainerDiscs] = useState(false)
+
+  const handleButton1Press = () => {
+    setContainerTips(true);
+    setContainerDiscs(false);
+  };
+
+  const handleButton2Press = () => {
+    setContainerTips(false);
+    setContainerDiscs(true);
+  };
+
+  return(
+    <View style={styles.mainContainer}>
+      <Text style={styles.title}>Crop Care Screen</Text>
+      
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={()=>0}>
+            <Text style={styles.buttonText}>Tips</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={()=>0}>
+            <Text style={styles.buttonText}>Discussions</Text>
+          </TouchableOpacity>
+      </View>
+      
+      <View style={styles.postContainer}>
+        <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
+            imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+        
+        <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
+            imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+      </View>
+    </View>
+  );
 };
 
 
-
-
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row', // Horizontal layout
+  mainContainer: {
+    margin: 10,
+    marginTop: 40,
     backgroundColor: '#E4FFF9',
-    borderRadius: 8,
-    padding: 16,
-    margin: 8,
-    borderWidth: 1,
   },
-  textContainer: {
-    flex: 1, // Takes up remaining horizontal space
+
+  // button design
+  buttonContainer:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    backgroundColor: '#76FEC5',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 7,
+    paddingHorizontal: 50,
+    borderRadius: 999,
+    opacity: 1,
+    elevation: 3,
+    backgroundColor: 'green',
+  },
+  buttonText:{
+    fontSize: 15,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  },
+
+  // post card design
+  postContainer:{
+    backgroundColor: '#76FEC5',
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   question: {
