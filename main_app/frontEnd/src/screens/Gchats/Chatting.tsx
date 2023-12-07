@@ -11,7 +11,6 @@ const Chatting = ({ route }) => {
   };
 
   const handleSendMessage = () => {
-    // Logic to send the message
     setMessages([...messages, { id: messages.length + 1, text: inputText }]);
     setInputText('');
   };

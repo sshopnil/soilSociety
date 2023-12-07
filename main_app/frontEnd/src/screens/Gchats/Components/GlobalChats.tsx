@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import { io } from "socket.io-client";
+import WebSocketExample from '../WebSocketServices';
 interface Book {
   id: number;
   name: string;
@@ -30,8 +31,8 @@ const GlobalChats = () => {
 
   const handleSendMessage = () => {
     
-    console.log('Sending message:', inputText);// logic to send msg
-
+    console.log('Sending message:');// logic to send msg
+    // io.emit("message",{name:"Evan", text:"this is a message"})
     
     setInputText('');
   };
@@ -67,6 +68,7 @@ const GlobalChats = () => {
   }, []);
 
   return (
+    <WebSocketExample>
     <View style={styles.container}>
       <Spinner
         visible={loading}
@@ -112,6 +114,7 @@ const GlobalChats = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </WebSocketExample>
   );
 };
 

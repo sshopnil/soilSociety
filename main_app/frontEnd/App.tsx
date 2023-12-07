@@ -1,16 +1,17 @@
 // @ts-ignore
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './src/navigations/AuthNavigator';
 import 'react-native-gesture-handler';
 import { ShoppingCartProvider } from './src/screens/FreshEats/providers/CartContext';
 
-const App = ()=>{
 
-  return (
-    <ShoppingCartProvider>
+
+const App = ()=>{
+   return (
+     <ShoppingCartProvider>
       <NavigationContainer>
       <AuthNavigator/>
     </NavigationContainer>

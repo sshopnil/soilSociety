@@ -12,8 +12,6 @@ const GchatsScreen = () =>{
 
     const [selectedButton, setSelectedButton] = useState(1);
 
-    
-
     const handleButtonPress = (buttonId: any) => {
         setSelectedButton(buttonId);
     };
