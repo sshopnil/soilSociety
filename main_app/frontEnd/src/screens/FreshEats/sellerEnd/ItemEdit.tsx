@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text, Image, Alert } from 'react-native';
 import { NativeBaseProvider, VStack, Badge, FormControl, Input, Button, Checkbox, Radio } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useAuth } from "../../../common/AuthContext";
 import { ScrollView } from "react-native-gesture-handler";
 import * as ImagePicker from 'expo-image-picker';
 import { GLOBALKEYS } from "../../../../globalkeys";
 import axios from "axios";
 
-function ItemForm() {
-    const [formData, setData] = React.useState({});
-    const [errors, setErrors] = React.useState({});
-    const navigation = useNavigation();
+
+interface ItemInfo{
+    data: any;
+}
+
+const ItemForm : React.FC<ItemInfo>= ({data}) => {
+
+    // console.log(data);
+    const [formData, setData] = React.useState(data);
     const [image, setImage] = useState("");
 
     const {email} = useAuth();
-    const [cat, setCat] = useState("1");
+    const [cat, setCat] = useState(data.category+"");
     const navigator = useNavigation();
-
-    const checkboxes = [
-        { name: "1", label: 'Poultry', checked: false },
-        { name: "2", label: 'Dairy', checked: false },
-        { name: "3", label: 'Foods and Vegetable', checked: false },
-        // Add more checkboxes as needed
-    ];
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -51,11 +49,11 @@ function ItemForm() {
 
 
     const onSubmit = () => {
-        console.log({...formData, category: cat});
-        axios.post(`${GLOBALKEYS.myIp4Addr}/products/add`, {...formData, category: cat, user_email: email})
+        setData({...formData, category: cat});
+        axios.put(`${GLOBALKEYS.myIp4Addr}/products/${data?.prod_id}`, formData)
         .then(Response=>{
             if(Response.data){
-                Alert.alert('Product add', 'Added successfully!', [
+                Alert.alert('Product edit', 'Editted successfully!', [
                     {
                       text: 'Cancel',
                       onPress: () => console.log('Cancel Pressed'),
@@ -87,7 +85,7 @@ function ItemForm() {
         <FormControl isRequired>
 
             <TouchableOpacity onPress={pickImage}>
-                <Image style={{ marginTop: 10, height: 250, width: "80%", borderRadius: 10, alignSelf: 'center' }} source={{ uri: image ? image : "https://tinyurl.com/3pxz5xy2" }} />
+                <Image style={{ marginTop: 10, height: 250, width: "80%", borderRadius: 10, alignSelf: 'center' }} source={{ uri: data?.image ? data?.image : "https://tinyurl.com/3pxz5xy2" }} />
             </TouchableOpacity>
             <FormControl.HelperText>
                 Click on the blank image to upload an image of your product
@@ -106,7 +104,7 @@ function ItemForm() {
 
             <FormControl.Label _text={{ bold: true }} mt={10}>Price</FormControl.Label>
             <Input
-                value={formData.price}
+                value={formData.price+""}
                 inputMode='numeric'
                 variant={'rounded'}
                 placeholder="How much for each of your product?"
@@ -117,7 +115,7 @@ function ItemForm() {
 
             <FormControl.Label _text={{ bold: true }} mt={10}>How many you have?</FormControl.Label>
             <Input
-                value={formData.qty}
+                value={formData.qty+""}
                 inputMode='numeric'
                 variant={'rounded'}
                 onChangeText={(value) => setData({ ...formData, qty: value })}
@@ -167,24 +165,37 @@ function ItemForm() {
 
         </FormControl>
 
-        <Button onPress={onSubmit} variant={'subtle'} colorScheme={'emerald'} my={5}>Post</Button>
+        <Button onPress={onSubmit} variant={'subtle'} colorScheme={'emerald'} my={5}>Submit</Button>
     </VStack>;
 };
 
 
 
 
+const ItemEdit = () => {
+    const parameters = useRoute().params;
+    // console.log(parameters?.prod_id);
+    const [data, setData] = useState();
 
-const PostItem = () => {
+
+    useEffect(()=>{
+        axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters?.prod_id}`)
+        .then(Response=>{
+            setData(Response.data);
+        })
+        .catch(e=> console.log(e));
+    }, []);
+
+
     return (
         <NativeBaseProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
                 <ScrollView style={{ height: 1000 }}>
                     <Text style={styles.titleStyle}>
-                        Post an item
+                        Edit Item
                     </Text>
                     <View style={styles.innerView}>
-                        <ItemForm />
+                        {data && <ItemForm data={data}/>}
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -213,4 +224,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PostItem;
+export default ItemEdit;
