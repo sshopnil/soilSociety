@@ -130,7 +130,7 @@ function ItemForm() {
 
         </FormControl>
 
-        <Button variant={'subtle'} colorScheme={'emerald'} my={5}>Post</Button>
+        <Button onPress={onSubmit} variant={'subtle'} colorScheme={'emerald'} my={5}>Post</Button>
     </VStack>;
 };
 
