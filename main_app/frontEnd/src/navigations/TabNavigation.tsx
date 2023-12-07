@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import UserInfo from '../screens/profile/UserInfo';
 import FreshEatsStack from '../screens/FreshEats/navigations/FreshEatsStack';
 import GChatsStack from '../screens/Gchats/Components/GChatsStack';
+import CropCareStack from '../screens/CropCare/navigations/CropCareStack'
 
 const tabs = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const TabNavigation = ()=>{
         />
         <tabs.Screen
             name="Crop Care" 
-            component={CropCareScreen}
+            component = {CropCareStack}
             options={{
               tabBarIcon: ({focused})=> <Ionicons name={focused ? "leaf": "leaf-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
               tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
