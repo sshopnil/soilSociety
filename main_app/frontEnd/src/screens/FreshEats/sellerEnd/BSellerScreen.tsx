@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { VStack, FormControl, Input, Button, NativeBaseProvider, Select, CheckIcon, Checkbox } from "native-base";
+import { useAuth } from "../../../common/AuthContext";
+import axios from "axios";
+import { GLOBALKEYS } from "../../../../globalkeys";
+import { useNavigation } from "@react-navigation/native";
 
 
 function SellerForm() {
+    const {email, setSeller} = useAuth();
+    const navigator = useNavigation();
     const [formData, setData] = React.useState({});
-    const [errors, setErrors] = React.useState({});
     const [isLocationSelected, setLocation] = useState(false);
     const checkboxes = [
         { name: 'poultry', label: 'Poultry', checked: false },
@@ -13,36 +18,60 @@ function SellerForm() {
         { name: 'veg', label: 'Foods and Vegetable', checked: false },
         // Add more checkboxes as needed
     ];
+// {
+//   "shop_name": "Murads shop",
+//   "address": "address*",
+//   "house": "home addr*",
+//   "thana": "thana",
+//   "division": "division*",
+//   "category": "An array of caategories"
+// }
 
-    const validate = () => {
-        if (formData.name === undefined) {
-            setErrors({
-                ...errors,
-                name: 'Name is required'
-            });
-            return false;
-        } else if (formData.name.length < 3) {
-            setErrors({
-                ...errors,
-                name: 'Name is too short'
-            });
-            return false;
-        }
-
-        return true;
-    };
-
-    const onSubmit = () => {
+    const onSubmit = async() => {
         // validate() ? console.log('Submitted') : console.log('Validation Failed');
-        console.log(formData);
+        const address = formData?.house + ", " + formData?.thana + ", " + formData?.division;
+
+        await Promise.all([
+            axios.post(`${GLOBALKEYS.myIp4Addr}/seller/add`, {
+                ...formData, 
+                address,
+                email
+            }).then(Response => {
+                if(Response.data){
+                    setData({});
+                    Alert.alert('Success', 'Congratulations! Now you can sell items', [
+                        {
+                          text: 'Cancel',
+                          onPress: () => console.log('Cancel Pressed'),
+                          style: 'cancel',
+                        },
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                      ]);
+                      setTimeout(() => {
+                        navigator.goBack();
+                      }, 1500);
+                      setSeller();
+                }
+            })
+                .catch(e => console.log(e + "Invalid form")),
+
+            axios.put(`${GLOBALKEYS.myIp4Addr}/users/update/${email}`)
+            .then(()=> console.log('changed status'))
+            .catch((e)=> console.log(e))
+        ])
+        ;
+        // console.log(formData, address);
+
+
     };
 
     return <VStack width="90%" mx="3" maxW="300px" my={10}>
         <FormControl isRequired>
             <FormControl.Label _text={{ bold: true }}>Shop Name</FormControl.Label>
             <Input
+                value={formData?.shop_name}
                 placeholder="ex. Jalal Agro"
-                onChangeText={(value) => setData({ ...formData, name: value })}
+                onChangeText={(value) => setData({ ...formData, shop_name: value })}
                 borderRadius={10}
             />
 
@@ -78,6 +107,7 @@ function SellerForm() {
                         Police Station
                     </FormControl.Label>
                     <Input
+                        value={formData?.thana}
                         placeholder="ex. Tejgaon"
                         onChangeText={(value) => setData({ ...formData, thana: value })}
                         borderRadius={10}
@@ -87,8 +117,18 @@ function SellerForm() {
                         House, Road No. & Area
                     </FormControl.Label>
                     <Input
+                        value={formData?.house}
                         placeholder="246/..., Namapara"
                         onChangeText={(value) => setData({ ...formData, house: value })}
+                        borderRadius={10}
+                    />
+                    <FormControl.Label _text={{ bold: true }} mt={5}>
+                        Phone
+                    </FormControl.Label>
+                    <Input
+                        value={formData?.phone}
+                        placeholder="+8801"
+                        onChangeText={(value) => setData({ ...formData, phone: value })}
                         borderRadius={10}
                     />
                 </>

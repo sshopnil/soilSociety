@@ -13,9 +13,9 @@ const SellerSection = () => {
                     Seller Section
                 </Text>
                 <View style={styles.innerView}>
-                    <SellerActionCard title="Pending Orders" notify={2}/>                    
-                    <SellerActionCard title="Post an item" notify={0}/>                    
-                    <SellerActionCard title="See my items" notify={0}/>                    
+                    <SellerActionCard title="Pending Orders" notify={2} goto="pending-order"/>                    
+                    <SellerActionCard title="Post an item" notify={0} goto="post-item"/>                    
+                    <SellerActionCard title="See my items" notify={0} goto="my-items"/>                    
                 </View>
             </SafeAreaView>
         </NativeBaseProvider>

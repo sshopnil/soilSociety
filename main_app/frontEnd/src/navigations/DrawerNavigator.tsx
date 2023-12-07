@@ -10,10 +10,13 @@ import BSellerScreen from '../screens/FreshEats/sellerEnd/BSellerScreen';
 import SellerSection from '../screens/FreshEats/sellerEnd/SellerSection';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../common/AuthContext';
 
 const Drawer = createDrawerNavigator();
 
 function DrawerNavigator() {
+
+    const {isSeller} = useAuth();
 
     return (
         <Drawer.Navigator
@@ -22,7 +25,7 @@ function DrawerNavigator() {
                 drawerActiveTintColor: "white",
                 headerShown: false,
                 drawerType: "slide",
-                swipeEdgeWidth: 80
+                swipeEdgeWidth: 50
                   
             }}
             >
@@ -34,14 +37,14 @@ function DrawerNavigator() {
                 }}
             />
             
-            <Drawer.Screen
+            {!isSeller && <Drawer.Screen
                 name="bseller"
                 component={BSellerScreen}
                 options={{
                     title: 'Become a seller',
                     drawerIcon: ({focused})=> <Ionicons name="man-outline" size={24} color={focused ? "white": "black"} />
                 }}
-            />
+            />}
             <Drawer.Screen
                 name="cart"
                 component={ViewCartScreen}
@@ -67,14 +70,14 @@ function DrawerNavigator() {
                     drawerIcon: ({focused})=> <Ionicons name="ios-list-outline" size={24} color={focused ? "white": "black"} />
                 }}
             />
-            <Drawer.Screen
+            {isSeller && <Drawer.Screen
                 name="seller-section"
                 component={SellerSection}
                 options={{
                     title: 'Seller section',
                     drawerIcon: ({focused})=> <Feather name="command" size={24} color={focused ? "white": "black"} />
                 }}
-            />
+            />}
         </Drawer.Navigator>
     );
 }
