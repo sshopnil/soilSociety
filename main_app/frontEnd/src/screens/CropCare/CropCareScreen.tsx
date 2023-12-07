@@ -7,6 +7,8 @@ import { black, green100 } from 'react-native-paper/lib/typescript/styles/themes
 import { filterConfig } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
 import ContainerTips from './Container/ContainerTips';
 import ContainerDiscs from './Container/ContainerDiscs';
+import { useNavigation } from '@react-navigation/native';
+
 /*
 flow:
   mainContainer
@@ -20,7 +22,9 @@ flow:
 const stack = createStackNavigator()
 
 // start
-const CropCareScreen = () =>{
+const CropCareScreen = (props) =>{
+  // const navigation = useNavigation()
+
   const [showContainerTips, setContainerTips] = useState(false);
   const [showContainerDiscs, setContainerDiscs] = useState(false)
 
@@ -54,8 +58,8 @@ const CropCareScreen = () =>{
         </View>
 
         <View style={styles.floatButton}>
-          <TouchableOpacity>
-            <Text>+</Text>
+          <TouchableOpacity onPress={()=>{props.navigation.navigate('addTip')}}>
+            <Text style={styles.fltBtnText}>+</Text>
           </TouchableOpacity>
         </View>
       </View> 
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#76FEC5',
     opacity: 1,
   },
+
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -138,11 +143,17 @@ const styles = StyleSheet.create({
     top: '70%',
     left: '80%',
     backgroundColor: "#D8E9A8",
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     textAlign: 'center',
     height: 50,
     width: 50,
     borderRadius: 15,
+    elevation: 5,
+  },
+  fltBtnText:{
+    color: '1B1B1B',
+    fontSize: 30,
   }
 });
 
