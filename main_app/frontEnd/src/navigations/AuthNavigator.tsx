@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 function AuthNavigator() {
   // //   console.log(Stack);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn} = useAuth();
 
   // console.log(isLoggedIn);
   return (
