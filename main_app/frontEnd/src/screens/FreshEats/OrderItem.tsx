@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Text, FormControl, Input, Divider, NativeBaseProvider, useTheme, Box, Button, Checkbox} from "native-base";
 import DataTableComponent from "./components/DataTable";
@@ -10,6 +10,9 @@ import { useShoppingCart } from "./providers/CartContext";
 
 const OrderItem = () => {
     const parameters = useRoute().params;
+    const date = new Date();
+    console.log(date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()); //today
+    const [formData, setData] = useState({});
     // console.log(parameters);
     const {cart, removeAll} = useShoppingCart();
     const navigator = useNavigation();
@@ -50,13 +53,22 @@ const OrderItem = () => {
                                     </Text>
                                     <FormControl mb="5">
                                         <FormControl.Label>Enter Billing and Shipping Address</FormControl.Label>
-                                        <Input />
+                                        <Input 
+                                        value={formData?.buyer_address}
+                                        onChangeText={(val)=>{
+                                            setData({...formData, buyer_address:  val})
+                                        }}/>
                                         <FormControl.HelperText>
                                             Give where to send percel and recieve money
                                         </FormControl.HelperText>
 
                                         <FormControl.Label pt={5}>Confirm Billing and Shipping Address</FormControl.Label>
-                                        <Input/>
+                                        <Input
+                                        value={formData?.buyer_address}
+                                        onChangeText={(val)=>{
+                                            setData({...formData, buyer_address:  val})
+                                        }}
+                                        />
                                         <FormControl.HelperText>
                                             Confirm the address
                                         </FormControl.HelperText>

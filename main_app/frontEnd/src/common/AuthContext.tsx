@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthProps {
-    email: string
+    isSeller: boolean,
+    email: string,
     isLoggedIn: boolean,
     setLoggedIn: (isset: boolean) => void,
     setLogin:()=> void,
     setLogout:()=> void,
     emailSet:(mail: string)=> void
+    setSeller:()=> void
 }
 
 const AuthContext = createContext<AuthProps | undefined>(undefined);
@@ -25,6 +27,9 @@ const useAuth = () => {
 const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [email, setEmail] = useState("");
+    const [isSeller, setIsSell] = useState(false);
+
+
     const setLogin = () => {
         setLoggedIn(true);
     };
@@ -36,6 +41,10 @@ const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setEmail(usrmail);
     }
 
+    const setSeller = ()=>{
+        setIsSell(true);
+    }
+
     const contextValue: AuthProps = {
         emailSet, 
         email,
@@ -43,6 +52,8 @@ const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setLoggedIn,
         setLogin,
         setLogout,
+        isSeller,
+        setSeller
     };
 
     return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
