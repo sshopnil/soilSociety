@@ -7,6 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { CartItem } from "./providers/CartContext";
 import { useShoppingCart } from "./providers/CartContext";
+import axios from "axios";
+import { GLOBALKEYS } from "../../../globalkeys";
   
 
 const results = [
@@ -18,7 +20,13 @@ const results = [
 const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
     const parameters = useRoute().params;
     const navigation = useNavigation();
-    const thisItem = results.find((item) => item.prod_id == parameters.id);
+    const [thisItem, setThisItem] = useState();
+    useEffect(()=>{
+        axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters.id}`).then(Response => {
+            setThisItem(Response.data);
+        })
+            .catch(e => console.log(e + "could not get any product"));
+    }, [])
     const [Oqty, setOqty] = useState(1);
     const {addToCart, cart, removeFromCart} = useShoppingCart();
 
@@ -62,7 +70,7 @@ const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
                         <ScrollView showsVerticalScrollIndicator={false}>
 
                             <View style={styles.imageViewStyle}>
-                                <Image style={styles.imageStyle} source={{ uri: thisItem?.img_src }} />
+                                <Image style={styles.imageStyle} source={{ uri: thisItem?.image }} />
                             </View>
                             <Text style={styles.priceText}>{thisItem?.price}৳</Text>
                             <Box flexDirection={'row'}>
@@ -84,11 +92,11 @@ const ResultDetails : React.FC<{item: CartItem}>= ({item}) => {
                             </Box>
                             <View style={styles.MainInfo}>
                                 <Text style={styles.itemTitle}>Ratings</Text>
-                                <StarRatingDisplay rating={thisItem.rating} style={styles.ratingStar} />
+                                <StarRatingDisplay rating={thisItem?.rating=== undefined? 0.0: thisItem?.rating} style={styles.ratingStar} />
                             </View>
                             <View style={styles.descBox}>
                                 <Text style={styles.descrTitle}>Description: </Text>
-                                <Text>{thisItem?.description}</Text>
+                                <Text>{thisItem?.desc}</Text>
                             </View>
 
                             <Box justifyContent={'center'} flexDirection={'row'} my={10}>
