@@ -7,7 +7,6 @@ import SuccessOrderScrn from "../SuccessOrderScrn";
 import SellerStack from "./SellerStack";
 
 
-
 const stack = createStackNavigator();
 
 

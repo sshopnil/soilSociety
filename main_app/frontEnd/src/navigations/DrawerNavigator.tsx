@@ -25,7 +25,7 @@ function DrawerNavigator() {
                 drawerActiveTintColor: "white",
                 headerShown: false,
                 drawerType: "slide",
-                swipeEdgeWidth: 80
+                swipeEdgeWidth: 50
                   
             }}
             >

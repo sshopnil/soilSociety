@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
 import { GLOBALKEYS } from "../../../globalkeys";
@@ -18,6 +18,10 @@ const FreshEatsScreen = () => {
     const { email } = useAuth();
     const [term, seTerm] = useState('');
     const [data, setData] = useState();
+    const [cat1, setCat1] = useState();
+    const [cat2, setCat2] = useState();
+    const [cat3, setCat3] = useState();
+
 
     useEffect(() => {
         axios.get(`${GLOBALKEYS.myIp4Addr}/products`).then(Response => {
@@ -32,7 +36,19 @@ const FreshEatsScreen = () => {
             return result?.category === category;
         });
     }
+    const [refreshing, setRefreshing] = React.useState(false);
 
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+        
+        axios.get(`${GLOBALKEYS.myIp4Addr}/products`).then(Response => {
+            setData(Response.data);
+        })
+            .catch(e => console.log(e + "could not get any product"));
+      }, 2000);
+    }, []);
     // console.log(filterResultsByCat(1));
     return (
         <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
@@ -40,7 +56,13 @@ const FreshEatsScreen = () => {
             <View style={styles.viewStyle}>
                 <SearchBar term={term} onTermChange={seTerm} />
                 <SafeAreaView style={styles.container}>
-                    <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                    <ScrollView 
+                        style={styles.scrollView} 
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                          }
+                        >
                         {data ? <>
                             <ResultsList
                                 results={filterResultsByCat(1)}

@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text} from 'react-native';
 import { NativeBaseProvider, VStack, Badge} from "native-base";
+import axios from "axios";
+import { GLOBALKEYS } from "../../../../globalkeys";
 
 
 
 const PendingOrder = () => {
+    const [prodIds, setId] = useState([]);
+
+    // useEffect(()=>{
+    //     axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters.id}`).then(Response => {
+    //         setThisItem(Response.data);
+    //     })
+    //         .catch(e => console.log(e + "could not get any product"));
+    // }, []);
     return (
         <NativeBaseProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
