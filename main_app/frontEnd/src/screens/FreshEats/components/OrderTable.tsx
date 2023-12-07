@@ -20,7 +20,7 @@ const OrderTable: React.FC<tableItems> = ({data, setOrderID}) => {
             </DataTable.Header>
 
             {
-                data.map((item, key)=>
+                data?.map((item, key)=>
                         <DataTable.Row key={item.id} onPress={()=> setOrderID(item)}> 
                         <DataTable.Cell>{item.id}</DataTable.Cell>
                         <DataTable.Cell>{item.price}৳</DataTable.Cell>

@@ -55,7 +55,7 @@ function SellerForm() {
             })
                 .catch(e => console.log(e + "Invalid form")),
 
-            axios.put(`${GLOBALKEYS.myIp4Addr}/users/update${email}`)
+            axios.put(`${GLOBALKEYS.myIp4Addr}/users/update/${email}`)
             .then(()=> console.log('changed status'))
             .catch((e)=> console.log(e))
         ])
