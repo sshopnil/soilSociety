@@ -2,7 +2,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { DataTable } from "react-native-paper";
 import { Text, FormControl, Input, Divider, NativeBaseProvider, useTheme, Box, Button, Checkbox} from "native-base";
 import DataTableComponent from "./components/DataTable";
 import { useShoppingCart } from "./providers/CartContext";
