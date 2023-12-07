@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text} from 'react-native';
 import { NativeBaseProvider, VStack, Badge} from "native-base";
-import SellerActionCard from "../components/SellerActionCard";
+import axios from "axios";
+import { GLOBALKEYS } from "../../../../globalkeys";
 
 
 
-const SellerSection = () => {
+const PendingOrder = () => {
+    const [prodIds, setId] = useState([]);
+
+    // useEffect(()=>{
+    //     axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters.id}`).then(Response => {
+    //         setThisItem(Response.data);
+    //     })
+    //         .catch(e => console.log(e + "could not get any product"));
+    // }, []);
     return (
         <NativeBaseProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
                 <Text style={styles.titleStyle}>
-                    Seller Section
+                    Pending Order
                 </Text>
-                <View style={styles.innerView}>
-                    <SellerActionCard title="Pending Orders" notify={2} goto="pending-order"/>                    
-                    <SellerActionCard title="Post an item" notify={0} goto="post-item"/>                    
-                    <SellerActionCard title="See my items" notify={0} goto="my-items"/>                    
+                <View style={styles.innerView}>                  
                 </View>
             </SafeAreaView>
         </NativeBaseProvider>
@@ -43,4 +49,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SellerSection;
+export default PendingOrder;

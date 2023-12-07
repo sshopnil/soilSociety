@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import { useNavigation} from "@react-navigation/native";
+import { useNavigation, useRoute} from "@react-navigation/native";
 import ResultCard from "./ResultCard";
 
 
@@ -16,11 +16,18 @@ const ResultsList : React.FC<propTypes> = ({results, title}) =>{
     {
         return null;
     }
+
+    const [refresh, setRefresh] = useState();
+    const navi = useRoute();
+    useEffect(()=>{
+        setRefresh(navi?.params);
+    }, [])
     // console.log(results);
     return(
         <View>
             <Text style = {styles.titleStyle}>{title}</Text>
-            <FlatList
+            {results&&<FlatList
+                extraData={false}
                 horizontal={true}
                 data = {results}
                 keyExtractor={(res)=> res.prod_id}
@@ -33,7 +40,7 @@ const ResultsList : React.FC<propTypes> = ({results, title}) =>{
                 }}
                 style={styles.listStyle}
                 showsHorizontalScrollIndicator = {false}
-            />
+            />}
         </View>
     );
 };

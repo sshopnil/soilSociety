@@ -1,23 +1,111 @@
 //@ts-nocheck
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { DataTable } from "react-native-paper";
 import { Text, FormControl, Input, Divider, NativeBaseProvider, useTheme, Box, Button, Checkbox} from "native-base";
 import DataTableComponent from "./components/DataTable";
 import { useShoppingCart } from "./providers/CartContext";
-
+import { useAuth } from "../../common/AuthContext";
+import { GLOBALKEYS } from "../../../globalkeys";
+import axios from "axios";
 
 
 const OrderItem = () => {
     const parameters = useRoute().params;
+    const date = new Date();
+    // console.log(date.getUTCDate())//today
+    const [formData, setData] = useState({});
     // console.log(parameters);
     const {cart, removeAll} = useShoppingCart();
     const navigator = useNavigation();
     let totalPrice = 0;
+
+    const {email} = useAuth();
+
+
     if(cart.length > 0)
     {
         cart.map(item=> totalPrice += item.price * item.qty);
+    }
+   
+
+    const genStartDate = ()=>{
+        if(date.getMonth() % 2 == 0){
+            if(date.getDate()+8 > 31){
+                const mon = date.getMonth()+1;
+
+                return date.getDate()-23+"-"+mon+"-"+date.getFullYear();
+            }
+        }
+        else if(date.getDate()+8 > 30){
+            const mon = date.getMonth()+1;
+
+                return date.getDate()-22+"-"+mon+"-"+date.getFullYear();
+        }
+        return date.getDate()+8+"-"+date.getMonth()+"-"+date.getFullYear();
+    }
+
+    const genEndDate=()=>{
+        if(date.getMonth() % 2 == 0){
+            if(date.getDate()+11 > 31){
+                const mon = date.getMonth()+1;
+
+                return date.getDate()-20+"-"+mon+"-"+date.getFullYear();
+            }
+        }
+        else if(date.getDate()+8 > 30){
+            const mon = date.getMonth()+1;
+
+                return date.getDate()-19+"-"+mon+"-"+date.getFullYear();
+        }
+        return date.getDate()+11+"-"+date.getMonth()+"-"+date.getFullYear();
+    }
+
+    // console.log(genStartDate(), " ----", genEndDate());
+    // {
+    //     "status": "order status",
+    //     "price": "total price",
+    //     "delDate_start": "date",
+    //     "delDate_end": "date",
+    //     "buyer_email": "dev@gmail.com",
+    //     "buyer_address": "address*"
+    //   }
+
+    let arr = parameters?.name !== null ? [parameters?.id] : cart.map((item)=> item.id);
+    // console.log(arr)
+    const handleSubmit= async ()=>{
+        // console.log(formData);
+        
+        const body={
+            status: 1,
+            price: parameters.name !== null ?  parameters?.price * parameters?.qty : totalPrice,
+            delDate_start: genStartDate(),
+            delDate_end: genEndDate(),
+            buyer_email: email,
+            product_ids: arr,
+            ...formData
+        }
+        // console.log(body);
+
+        if(parameters?.name !== null){
+            await axios.put(`${GLOBALKEYS.myIp4Addr}/products/update_order/${parameters.id}/${parameters.qty}`)
+        }
+        else{
+            await Promise.all(cart.map((item)=>{
+                axios.put(`${GLOBALKEYS.myIp4Addr}/products/update_order/${item.id}/${item.qty}`)
+                .catch(e=> console.log(e));
+            }));
+        }
+
+
+        await axios.post(`${GLOBALKEYS.myIp4Addr}/order/add/`, body)
+        .then(()=> {
+            removeAll(); //cart remove
+            navigator.navigate('order-success');
+        })
+        .catch((e)=> console.log(e));
+
+
     }
     return (
         <NativeBaseProvider>
@@ -51,15 +139,13 @@ const OrderItem = () => {
                                     </Text>
                                     <FormControl mb="5">
                                         <FormControl.Label>Enter Billing and Shipping Address</FormControl.Label>
-                                        <Input />
+                                        <Input 
+                                        value={formData?.buyer_address}
+                                        onChangeText={(val)=>{
+                                            setData({...formData, buyer_address:  val})
+                                        }}/>
                                         <FormControl.HelperText>
                                             Give where to send percel and recieve money
-                                        </FormControl.HelperText>
-
-                                        <FormControl.Label pt={5}>Confirm Billing and Shipping Address</FormControl.Label>
-                                        <Input/>
-                                        <FormControl.HelperText>
-                                            Confirm the address
                                         </FormControl.HelperText>
                                         <Checkbox mt={10} isInvalid={false} colorScheme='green' onChange={()=>console.log('checked')}>
                                             Confirm Order
@@ -69,7 +155,7 @@ const OrderItem = () => {
                                 </Box>
                             </View>
                             <Box flexDirection={'row'} mt={5}>
-                            <Button variant={'subtle'} colorScheme={'success'} flex={.5} onPress={()=> {navigator.navigate('order-success'); removeAll()}}>Place Order</Button>
+                            <Button variant={'subtle'} colorScheme={'success'} flex={.5} onPress={handleSubmit}>Place Order</Button>
                             <Button variant={'subtle'} colorScheme={'danger'} flex={.5} onPress={()=> navigator.navigate('fhome')}>Cancel Order</Button>
                             </Box>
                         </ScrollView>

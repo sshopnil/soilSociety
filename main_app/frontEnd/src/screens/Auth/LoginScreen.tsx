@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { VStack, FormControl, Input, Button, NativeBaseProvider } from "native-base";
 import axios from "axios";
-import { GLOBALKEYS, CurrUser } from '../../../globalkeys';
+import { GLOBALKEYS} from '../../../globalkeys';
 import { getData, storeData } from "../FreshEats/AsyncStorageUtils";
 import { useAuth } from "../../common/AuthContext";
 
@@ -11,7 +11,7 @@ function LoginForm() {
     const [formData, setData] = React.useState({});
     const [errors, setErrors] = React.useState({});
     const navigation = useNavigation();
-    const {emailSet, setLogin} = useAuth();
+    const {emailSet, setLogin, setSeller} = useAuth();
 
 
     const validate = () => {
@@ -44,24 +44,28 @@ function LoginForm() {
 
     const onSubmit = () => {
         // console.log(formData);
+        // axios.get(`${GLOBALKEYS.myIp4Addr}/users/`).then(Response=> console.log(Response.data))
         validate()
             ? axios.post(`${GLOBALKEYS.myIp4Addr}/users/login`, formData).then(Response => {
-                if (Response.data.token === "ok") {
-                    // storeData('user', formData.email);
-                    console.log('success');
-                    setErrors({})
-                    // navigation.dispatch(
-                    //     CommonActions.reset({
-                    //              index: 0,
-                    //              routes: [{ name: 'home'}],
-                    //         })
-                    //      );
-                    setLogin();
-                    emailSet(formData.email);
-                    navigation.navigate('home');
+                console.log(Response.data);
+                if (Response.data.token !== "general") {
+                    setSeller();
                 }
+                // storeData('user', formData.email);
+                console.log('success');
+                setErrors({})
+                // navigation.dispatch(
+                //     CommonActions.reset({
+                //              index: 0,
+                //              routes: [{ name: 'home'}],
+                //         })
+                //      );
+                setLogin();
+                
+                emailSet(formData.email);
+                navigation.navigate('home');
             }).catch(e=> {
-                console.log('Invalid Pass');
+                console.log(e);
                 setErrors({ ...errors, pass: "invalid password" });
                 setData({});
             })
@@ -109,6 +113,7 @@ function LoginForm() {
 
 
 const LoginScreen = () => {
+    const navigation = useNavigation();
 
     return (
         <NativeBaseProvider>
