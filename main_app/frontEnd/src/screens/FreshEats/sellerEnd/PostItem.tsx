@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text, Image } from 'react-native';
-import { NativeBaseProvider, VStack, Badge, FormControl, Input, Button } from "native-base";
+import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text, Image, Alert } from 'react-native';
+import { NativeBaseProvider, VStack, Badge, FormControl, Input, Button, Checkbox, Radio } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../../common/AuthContext";
 import { ScrollView } from "react-native-gesture-handler";
 import * as ImagePicker from 'expo-image-picker';
-
+import { GLOBALKEYS } from "../../../../globalkeys";
+import axios from "axios";
 
 function ItemForm() {
     const [formData, setData] = React.useState({});
@@ -13,7 +14,16 @@ function ItemForm() {
     const navigation = useNavigation();
     const [image, setImage] = useState("");
 
-    const { emailSet, setLogin } = useAuth();
+    const {email} = useAuth();
+    const [cat, setCat] = useState("1");
+    const navigator = useNavigation();
+
+    const checkboxes = [
+        { name: "1", label: 'Poultry', checked: false },
+        { name: "2", label: 'Dairy', checked: false },
+        { name: "3", label: 'Foods and Vegetable', checked: false },
+        // Add more checkboxes as needed
+    ];
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -36,42 +46,45 @@ function ItemForm() {
     };
 
 
-    const validate = () => {
-        if (formData.email === undefined) {
-            setErrors({
-                ...errors,
-                email: 'Email is required'
-            });
-            return false;
-        } else if (formData.email.length < 5) {
-            setErrors({
-                ...errors,
-                email: 'Invalid Email'
-            });
-            return false;
-        }
-        else if (formData.password === undefined) {
-            setErrors({
-                ...errors,
-                pass: 'Password is required'
-            });
-        }
-
-        return true;
-    };
-
     // axios.get(`${myIp4Addr}/users/`).then(Response=> console.log(Response.data));
 
 
 
     const onSubmit = () => {
-        console.log(formData);
-
-        // console.log(formData);
+        console.log({...formData, category: cat});
+        axios.post(`${GLOBALKEYS.myIp4Addr}/products/add`, {...formData, category: cat, user_email: email})
+        .then(Response=>{
+            if(Response.data){
+                Alert.alert('Product add', 'Added successfully!', [
+                    {
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
+                      style: 'cancel',
+                    },
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                  ]);
+                  setData({});
+                setTimeout(() => {
+                    navigator.goBack();
+                  }, 1500);
+            }
+        })
+        .catch(e=> {
+            Alert.alert('Product add', 'Invalid form request!', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
+              setData({});
+        })
+        
     };
 
     return <VStack width="90%" mx="3" maxW="300px">
-        <FormControl isRequired isInvalid={'email' in errors || 'pass' in errors}>
+        <FormControl isRequired>
 
             <TouchableOpacity onPress={pickImage}>
                 <Image style={{ marginTop: 10, height: 250, width: "80%", borderRadius: 10, alignSelf: 'center' }} source={{ uri: image ? image : "https://tinyurl.com/3pxz5xy2" }} />
@@ -124,9 +137,33 @@ function ItemForm() {
                 borderRadius={10}
             />
 
-            {'pass' || 'email' in errors ? <FormControl.ErrorMessage>Invalid password or email</FormControl.ErrorMessage> : <FormControl.HelperText>
-                Your password
-            </FormControl.HelperText>}
+
+            <FormControl.Label _text={{ bold: true }} mt={5}>
+                Product Category
+            </FormControl.Label>
+            <VStack space={6} mt={2}>
+                <Radio.Group
+                    name="products-category"
+                    accessibilityLabel="category"
+                    value={cat}
+                    onChange={(val) => {
+                        setCat(val);
+                        // setData({...formData, category: val})
+                    }}
+
+                >
+
+                    <Radio value="1" my={1}>
+                        Poultry 
+                    </Radio>
+                    <Radio value="2" my={1}>
+                        Dairy
+                    </Radio>
+                    <Radio value="3" my={1}>
+                        Foods and vegetables 
+                    </Radio>
+                </Radio.Group>
+            </VStack>
 
         </FormControl>
 

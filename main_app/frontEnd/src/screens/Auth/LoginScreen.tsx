@@ -44,8 +44,10 @@ function LoginForm() {
 
     const onSubmit = () => {
         // console.log(formData);
+        // axios.get(`${GLOBALKEYS.myIp4Addr}/users/`).then(Response=> console.log(Response.data))
         validate()
             ? axios.post(`${GLOBALKEYS.myIp4Addr}/users/login`, formData).then(Response => {
+                console.log(Response.data);
                 if (Response.data.token === "ok") {
                     // storeData('user', formData.email);
                     console.log('success');
@@ -61,7 +63,7 @@ function LoginForm() {
                     navigation.navigate('home');
                 }
             }).catch(e=> {
-                console.log('Invalid Pass');
+                console.log(e);
                 setErrors({ ...errors, pass: "invalid password" });
                 setData({});
             })
@@ -109,6 +111,7 @@ function LoginForm() {
 
 
 const LoginScreen = () => {
+    const navigation = useNavigation();
 
     return (
         <NativeBaseProvider>
