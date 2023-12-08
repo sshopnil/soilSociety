@@ -1,23 +1,21 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-interface propTypes {
-  TipsData: Array<Object>
+interface CropPostDetailProps {
+  route: { params: { title: string; question: string; imageUrl: string } };
 }
 
-const TipsCard: React.FC<propTypes> = ({ TipsData }) => {
-  // const { postId, postTitle, postDetail, imgUrl } = TipsData;
+const CropPostDetail: React.FC<CropPostDetailProps> = ({ route }) => {
+  const { title, question, imageUrl } = route.params;
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: TipsData.imgURL }} style={styles.image} />
-      <Text style={styles.title}>{TipsData.tipTitle}</Text>
-      <Text style={styles.question}>{TipsData.tipDetail}</Text>
+      <Image source={{ uri: imageUrl }} style={styles.image} />
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.question}>{question}</Text>
     </View>
   );
 };
-
-export default TipsCard;
 
 const styles = StyleSheet.create({
   container: {
@@ -40,3 +38,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+export default CropPostDetail;

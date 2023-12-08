@@ -121,6 +121,7 @@ const GchatsScreen = () =>{
                                 textAlign: 'center',
                                 textAlignVertical: 'center',
                             }}> Experts </Text>
+                            
                         </TouchableOpacity>
 
                     </ScrollView>
@@ -130,6 +131,7 @@ const GchatsScreen = () =>{
 
             {selectedButton === 1 && <GlobalChats/>}
             {selectedButton === 2 && <LocalChats/>}
+            
             
         </SafeAreaView>
     );

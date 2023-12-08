@@ -1,38 +1,76 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import { View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView, Alert } from "react-native";
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import { Button, Icon, NativeBaseProvider, useToast, Box, Center, Text, IconButton } from "native-base";
+import { Button, Icon, NativeBaseProvider, Box, Center, Text, IconButton, FormControl, Slider, VStack, WarningOutlineIcon } from "native-base";
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { CartItem } from "./providers/CartContext";
+import { useShoppingCart } from "./providers/CartContext";
+import axios from "axios";
+import { GLOBALKEYS } from "../../../globalkeys";
 
-const results = [
-    { "price": 30, "prod_id": 1, "rem_item": 50, "rating": 4.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
-    { "price": 40, "prod_id": 2, "rem_item": 48, "rating": 4.5, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
-    { "price": 100, "prod_id": 3, "rem_item": 88, "rating": 3.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." }
-];
 
-const ResultDetails = () => {
+const ResultDetails: React.FC<{ item: CartItem }> = ({ item }) => {
+    const [rating, setRating] = useState(0);
     const parameters = useRoute().params;
-    const toast = useToast();
     const navigation = useNavigation();
-    const thisItem = results.find((item) => item.prod_id == parameters.id);
-    const [cartStatus, setCart] = useState(false);
+    const [thisItem, setThisItem] = useState();
+    useEffect(() => {
+        axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters.id}`).then(Response => {
+            setThisItem(Response.data);
+        })
+            .catch(e => console.log(e + "could not get any product"));
+    }, [])
     const [Oqty, setOqty] = useState(1);
+    const { addToCart, cart, removeFromCart } = useShoppingCart();
 
-    const handleIncrease =()=>{
+
+    const handleIncrease = () => {
         setOqty(Oqty + 1);
     }
-    const handleDecrease =()=>{
+    const handleDecrease = () => {
         setOqty(Oqty - 1);
     }
-    const handleCartBtn = () => {
-        setCart(true);
-    }
-    // console.log(thisItem);
 
-    // console.log(parameters);
+
+
+    // useEffect(()=> {
+    //     console.log(cart);
+    //     console.log(cart.find(item => item.id == thisItem?.prod_id) === undefined);
+    // },[]);
+
+
+    const handleCartBtn = () => {
+        // setCart(true);
+        const item = {
+            id: thisItem?.prod_id,
+            name: thisItem?.name,
+            price: thisItem?.price,
+            qty: Oqty,
+            img_src: thisItem?.img_src
+        }
+        addToCart(item);
+    }
+
+    const handleRemoveCartBtn = () => {
+        removeFromCart(thisItem?.prod_id);
+    }
+
+    const handleSubmit = ()=>{
+        axios.put(`${GLOBALKEYS.myIp4Addr}/products/${thisItem?.prod_id}`, {rating: rating})
+        .then(()=>{
+            Alert.alert('Success', 'Thank you for your feedback!', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
+        })
+        .catch(e=> console.log(e));
+    }
     return (
         <NativeBaseProvider>
             <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
@@ -42,7 +80,7 @@ const ResultDetails = () => {
                         <ScrollView showsVerticalScrollIndicator={false}>
 
                             <View style={styles.imageViewStyle}>
-                                <Image style={styles.imageStyle} source={{ uri: thisItem?.img_src }} />
+                                <Image style={styles.imageStyle} source={{ uri: thisItem?.image }} />
                             </View>
                             <Text style={styles.priceText}>{thisItem?.price}৳</Text>
                             <Box flexDirection={'row'}>
@@ -64,57 +102,93 @@ const ResultDetails = () => {
                             </Box>
                             <View style={styles.MainInfo}>
                                 <Text style={styles.itemTitle}>Ratings</Text>
-                                <StarRatingDisplay rating={thisItem.rating} style={styles.ratingStar} />
+                                <StarRatingDisplay rating={thisItem?.rating === undefined ? 0.0 : thisItem?.rating} style={styles.ratingStar} />
                             </View>
+                            <Text style={{ marginHorizontal: 20, fontSize: 16, alignSelf: 'flex-end' }}>Items Available: {thisItem?.qty}</Text>
+
                             <View style={styles.descBox}>
                                 <Text style={styles.descrTitle}>Description: </Text>
-                                <Text>{thisItem?.description}</Text>
+                                <Text>{thisItem?.desc}</Text>
                             </View>
 
                             <Box justifyContent={'center'} flexDirection={'row'} my={10}>
-                            <Text style={{fontSize: 16, alignSelf: 'center'}}>QTY: </Text>
+                                <Text style={{ fontSize: 16, alignSelf: 'center' }}>QTY: </Text>
                                 {/* increase btn  */}
-                            <IconButton icon={<Icon as={Entypo} name="minus" />} size={'sm'} isDisabled={Oqty == 0? true: false} onPress={handleDecrease}/>
-                            <Text style={{fontSize: 16, alignSelf: 'center'}}>{Oqty}</Text>
-                            <IconButton icon={<Icon as={Entypo} name="plus" />} size={'sm'} isDisabled={thisItem?.rem_item  == Oqty? true: false} onPress={handleIncrease}/>
+                                <IconButton icon={<Icon as={Entypo} name="minus" />} size={'sm'} isDisabled={Oqty == 0 ? true : false} onPress={handleDecrease} />
+                                <Text style={{ fontSize: 16, alignSelf: 'center' }}>{Oqty}</Text>
+                                <IconButton icon={<Icon as={Entypo} name="plus" />} size={'sm'} isDisabled={thisItem?.rem_item == Oqty ? true : false} onPress={handleIncrease} />
                                 {/* increase btn  */}
                             </Box>
                             <View style={styles.MainInfo}>
-                                <Button
-                                    leftIcon={<Icon as={Entypo} name="shopping-bag" size="sm" />}
-                                    style={{ flex: .5 }}
-                                    variant={'outline'}
-                                    colorScheme={'blueGray'}
-                                    onPress={() => navigation.navigate('order-item', { name: thisItem?.name, price: thisItem?.price, qty: Oqty})}
-                                >
-                                    Buy Now
-                                </Button>
-                                {cartStatus
-                                    ? <Button
-                                        leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
-                                        style={{ flex: .5 }}
-                                        variant={'ghost'}
-                                        colorScheme={'danger'}
-                                        onPress={handleCartBtn}
-                                        isDisabled={true}
+                                {thisItem?.qty >= Oqty
+                                    ?
+                                    <>
+                                        <Button
+                                            leftIcon={<Icon as={Entypo} name="shopping-bag" size="sm" />}
+                                            style={{ flex: .5 }}
+                                            variant={'outline'}
+                                            colorScheme={'blueGray'}
+                                            onPress={() => navigation.navigate('order-item', { name: thisItem?.name, price: thisItem?.price, qty: Oqty, id: thisItem?.prod_id })}
+                                        >
+                                            Buy Now
+                                        </Button>
+                                        {cart.find(item => item.id == thisItem?.prod_id) !== undefined
+                                            ? <Button
+                                                leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
+                                                style={{ flex: .5 }}
+                                                variant={'ghost'}
+                                                colorScheme={'danger'}
+                                                onPress={handleRemoveCartBtn}
+                                            >
+                                                Remove From Cart
+                                            </Button>
 
+                                            : <Button
+                                                leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
+                                                style={{ flex: .5 }}
+                                                variant={'outline'}
+                                                colorScheme={'amber'}
+                                                onPress={handleCartBtn}
 
-                                    >
-                                        Added to cart
-                                    </Button>
-
-                                    : <Button
-                                        leftIcon={<Icon as={Entypo} name="shopping-cart" size="sm" />}
-                                        style={{ flex: .5 }}
+                                            >
+                                                Add to cart
+                                            </Button>
+                                        }
+                                    </>
+                                    :
+                                    <Button
+                                        leftIcon={<Icon as={Entypo} name="shopping-bag" size="sm" />}
+                                        style={{ flex: 1 }}
                                         variant={'outline'}
-                                        colorScheme={'amber'}
-                                        onPress={handleCartBtn}
-
+                                        colorScheme={'blueGray'}
+                                        isDisabled
                                     >
-                                        Add to cart
+                                        Out Of Stock
                                     </Button>
                                 }
+
                             </View>
+                            <VStack space={4} w="100%" p={50} alignItems={'center'}>
+                                <FormControl>
+                                    <FormControl.Label fontSize={16}>Rate the product</FormControl.Label>
+                                    <StarRatingDisplay rating={rating} style={[styles.ratingStar, {alignSelf:'center'}]} />
+                                    <Slider 
+                                        defaultValue={rating} 
+                                        maxValue={5} 
+                                        minValue={0} 
+                                        onChange={(value) => setRating(value)}
+                                        width={250}
+                                        colorScheme={'pink'}
+                                        my={10}
+                                        >
+                                        <Slider.Track>
+                                            <Slider.FilledTrack />
+                                        </Slider.Track>
+                                        <Slider.Thumb />
+                                    </Slider>
+                                <Button variant={'subtle'} colorScheme={'coolGray'} onPress={handleSubmit}>Submit</Button>
+                                </FormControl>
+                            </VStack>
                         </ScrollView>
                     </SafeAreaView>
                 </View>
@@ -132,7 +206,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 10,
-        paddingBottom: 90
+        paddingBottom: 100
     },
     descBox: {
         padding: 20,
@@ -172,7 +246,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     titleStyle: {
-        paddingTop: 42,
+        paddingTop: 56,
         backgroundColor: '#1B1B1B',
         color: "#D8E9A8",
         fontSize: 30,
