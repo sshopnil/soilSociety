@@ -8,7 +8,7 @@ import { filterConfig } from 'react-native-gesture-handler/lib/typescript/handle
 import ContainerTips from './Container/ContainerTips';
 import ContainerDiscs from './Container/ContainerDiscs';
 import { useNavigation } from '@react-navigation/native';
- 
+
 /*
 flow:
   mainContainer
@@ -19,7 +19,6 @@ flow:
       posts
     Button-floating
 */
-
 const stack = createStackNavigator()
 
 // start
