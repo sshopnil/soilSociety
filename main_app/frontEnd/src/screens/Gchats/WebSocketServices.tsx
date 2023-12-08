@@ -115,10 +115,10 @@ const WebSocketExample: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const wsRef = useRef<WebSocket | null>(null);
 
-  const wsUrl = 'ws://192.168.0.5:3000';
+  const wsUrl = 'ws://192.168.0.5:3000/socket';
   const connectWebSocket = () => {
     // WebSocket connection URL
-    const ws = new WebSocket(wsUrl,"http");
+    const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
       console.log('WebSocket opened');

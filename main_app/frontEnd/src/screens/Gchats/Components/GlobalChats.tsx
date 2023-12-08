@@ -34,6 +34,10 @@ const GlobalChats = () => {
     console.log('Sending message:');// logic to send msg
     // io.emit("message",{name:"Evan", text:"this is a message"})
     
+    let dataSend = {
+      name: "evan",
+      text: "this is a message"
+    }
     setInputText('');
   };
 
@@ -117,6 +121,121 @@ const GlobalChats = () => {
     </WebSocketExample>
   );
 };
+
+
+
+// import * as MailComposer from 'expo-mail-composer'
+// interface Book {
+//   id: number;
+//   name: string;
+//   type: string;
+//   available: boolean;
+// }
+
+// const GlobalChats = () => {
+//   const [data, setData] = useState<Book[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [refreshing, setRefreshing] = useState(false);
+//   const [inputText, setInputText] = useState('');
+
+//   const [isAvailable, setIsAvailable] = useState(false);
+
+//   useEffect(() => {
+//     async function checkAvailability() {
+//       const isMailAvailable = await MailComposer.isAvailableAsync();
+//     }
+
+//     checkAvailability();
+//   }, [])
+
+//   const handleInputChange = (text: string) => {
+//     setInputText(text);
+//   };
+
+//   const handleSendMessage = () => {
+    
+//     console.log('Sending message:');// logic to send msg
+//     // io.emit("message",{name:"Evan", text:"this is a message"})
+    
+//     let dataSend = {
+//       name: "evan",
+//       text: "this is a message"
+//     }
+//     setInputText('');
+//   };
+
+  
+
+//   const getAPIData = async () => {
+//     try {
+//       const url = 'https://simple-books-api.glitch.me/books';
+//       const response = await fetch(url);
+
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+
+//       const result: Book[] = await response.json();
+//       setData(result);
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     } finally {
+//       setLoading(false);
+//       setRefreshing(false);
+//     }
+//   };
+
+//   const handleRefresh = () => {
+//     setRefreshing(true);
+//     getAPIData();
+//   };
+
+//   useEffect(() => {
+//     getAPIData();
+//   }, []);
+
+//   return (
+//     <WebSocketExample>
+//     <View style={styles.container}>
+//       <Spinner
+//         visible={loading}
+//         textContent={'Loading...'}
+//         textStyle={styles.loadingText}
+//         overlayColor="rgba(0, 0, 0, 0.6)"
+//       />
+//       <FlatList
+//         style={styles.flatList}
+//         data={data.slice(0,20).reverse()}
+//         keyExtractor={(item) => item.id.toString()}
+//         renderItem={({ item }) => (
+//           <View style={styles.itemContainer}>
+//             <View style={styles.rowContainer}>
+              
+              
+//             </View>
+//           </View>
+//         )}
+//         onEndReached={handleRefresh}
+//         onEndReachedThreshold={0.1}
+//         refreshControl={
+//           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+//         }
+//       />
+//       <View style={styles.inputContainer}>
+//         <TextInput
+//           style={styles.input}
+//           placeholder="Type your message..."
+//           value={inputText}
+//           onChangeText={handleInputChange}
+//         />
+//         <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
+//           <Text style={styles.sendButtonText}>Send</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//     </WebSocketExample>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
