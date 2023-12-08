@@ -22,7 +22,7 @@ const SuccessOrderScrn = () => {
                             <Box alignContent={'center'} mt={'1/2'} padding={50}>
                                 <Feather style={{alignSelf:'center'}} name="check-circle" size={60} color="#1B1B1B" />
                                 <Text mt={5} alignSelf={'center'} bold color={'#1B1B1B'} style={{fontSize:20}}>Order Placed Successfully!</Text>
-                                <Text mt={5} alignSelf={'center'} color={'#1B1B1B'} style={{fontSize:20}}>Thank you for shopping with us</Text>
+                                <Text mt={5} alignSelf={'center'} color={'#1B1B1B'} style={{fontSize:20}}>Order ID: #23njjn32</Text>
                             </Box>
                         </ScrollView>
                     </SafeAreaView>

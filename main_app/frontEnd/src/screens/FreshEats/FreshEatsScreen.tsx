@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import React, { useState} from "react";
+import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView} from 'react-native';
 import SearchBar from "./components/SearchBar";
 import ResultsList from "./components/ResultsList";
-import { GLOBALKEYS } from "../../../globalkeys";
-import axios from "axios";
-import { useAuth } from "../../common/AuthContext";
+
+
+
 const results = [
     { "price": 30, "prod_id": 1, "rem_item": 50, "rating": 4.9, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
     { "price": 40, "prod_id": 2, "rem_item": 48, "rating": 4.5, "name": "Item name 1", "img_src": 'https://images.pexels.com/photos/5840409/pexels-photo-5840409.jpeg?auto=compress&cs=tinysrgb&w=1600', description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur massa in nunc sodales aliquet quis nec ligula. Curabitur vel nibh vel ipsum aliquet rutrum non quis tortor. Suspendisse pulvinar est vitae enim tincidunt lacinia in auctor nisi. Mauris sagittis tempor sapien, vel scelerisque risus eleifend nec. Aliquam sollicitudin enim quis eros mollis posuere. Maecenas vel purus a odio molestie ultrices sodales quis quam. Phasellus vel odio a erat posuere vehicula non sit amet dui. Donec vel massa lorem. Mauris ac mattis felis. Ut dictum libero interdum turpis lacinia, nec lobortis arcu sagittis. Cras faucibus, neque eget sagittis vulputate, lacus lorem commodo turpis, ut volutpat nulla est ut eros." },
@@ -14,72 +14,27 @@ const results = [
 
 const FreshEatsScreen = () => {
 
-
-    const { email } = useAuth();
     const [term, seTerm] = useState('');
-    const [data, setData] = useState();
-    const [cat1, setCat1] = useState();
-    const [cat2, setCat2] = useState();
-    const [cat3, setCat3] = useState();
 
-
-    useEffect(() => {
-        axios.get(`${GLOBALKEYS.myIp4Addr}/products`).then(Response => {
-            setData(Response.data);
-        })
-            .catch(e => console.log(e + "could not get any product"));
-    }, [])
-
-    const filterResultsByCat = (category: number) => {
-        //price === 1(poultry) || 2(dairy) || 3(veg)
-        return data?.filter(result => {
-            return result?.category === category;
-        });
-    }
-    const [refreshing, setRefreshing] = React.useState(false);
-
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-        
-        axios.get(`${GLOBALKEYS.myIp4Addr}/products`).then(Response => {
-            setData(Response.data);
-        })
-            .catch(e => console.log(e + "could not get any product"));
-      }, 2000);
-    }, []);
-    // console.log(filterResultsByCat(1));
     return (
         <View style={{ backgroundColor: '#1B1B1B', height: "100%" }}>
             <Text style={styles.titleStyle}>FreshEats</Text>
             <View style={styles.viewStyle}>
                 <SearchBar term={term} onTermChange={seTerm} />
                 <SafeAreaView style={styles.container}>
-                    <ScrollView 
-                        style={styles.scrollView} 
-                        showsVerticalScrollIndicator={false}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                          }
-                        >
-                        {data ? <>
-                            <ResultsList
-                                results={filterResultsByCat(1)}
-                                title="Poultry"
-                            />
-                            <ResultsList
-                                results={filterResultsByCat(2)}
-                                title="Dairy"
-                            />
-                            <ResultsList
-                                results={filterResultsByCat(3)}
-                                title="Foods and vegetables"
-                            />
-                        </>
-                            :
-                            <Text style={styles.titleStyle2}>No Items Found</Text>
-                        }
+                    <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                        <ResultsList
+                            results={results}
+                            title="Poultry"
+                        />
+                        <ResultsList
+                            results={results}
+                            title="Dairy"
+                        />
+                        <ResultsList
+                            results={results}
+                            title="Foods and vegetables"
+                        />
                     </ScrollView>
                 </SafeAreaView>
             </View>
@@ -88,12 +43,6 @@ const FreshEatsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    titleStyle2: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 15,
-        marginTop: 10
-    },
     titleStyle: {
         paddingTop: 42,
         backgroundColor: '#1B1B1B',
@@ -102,7 +51,7 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         fontWeight: "700",
         paddingLeft: 20,
-        paddingVertical: 20,
+        paddingVertical: 20
     },
     viewStyle: {
         borderTopStartRadius: 20,
