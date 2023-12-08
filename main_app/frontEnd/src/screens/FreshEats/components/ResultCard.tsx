@@ -17,10 +17,10 @@ const ResultCard : React.FC<propTypes> = ({results}) => {
 
             <Image 
                 style={styles.imageStyle} 
-                source={{ uri: results.image}} 
+                source={{ uri: results.img_src}} 
             />
             <Text style={styles.titleStyle}>{results.name}</Text>
-            <Text style={styles.inStockTxt}>In stock: {results.qty}</Text>
+            <Text style={styles.inStockTxt}>In stock: {results.rem_item}</Text>
             <Text style={styles.ratingTxt}>Rating: {results.rating}</Text>
         </View>
     );

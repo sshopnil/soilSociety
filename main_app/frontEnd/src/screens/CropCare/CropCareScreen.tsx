@@ -1,48 +1,131 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Title } from 'react-native-paper';
 import PostCard from '../../providers/PostCard';
-
+import { black, green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { filterConfig } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
+import ContainerTips from './Container/ContainerTips';
+import ContainerDiscs from './Container/ContainerDiscs';
+import { useNavigation } from '@react-navigation/native';
+ 
+/*
+flow:
+  mainContainer
+    buttonContainer
+      button 1 - Tips
+      button 2 - Discs
+    Container
+      posts
+    Button-floating
+*/
 
 const stack = createStackNavigator()
 
-const CropCareScreen = () =>{
-    return(
-        <View>
-            <Text style={styles.title}>Crop Care Screen</Text>
-            
-            <View>
-                <Text>Tips</Text>
-                <Text>Discussion</Text>
-            </View>
-            
-            <PostCard title='1st Quesion Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
-            
-            <PostCard title='2nd Questoin Title' question='Quisque sollicitudin ipsum sem, vel fermentum felis rutrum nec.'
-                imageUrl='https://th.bing.com/th/id/R.e1831c82039795788181eed7d87909f7?rik=7l4wuGS2svROlA&pid=ImgRaw&r=0'/>
+// start
+const CropCareScreen = (props) =>{
+  // const navigation = useNavigation()
+
+  const [showContainerTips, setContainerTips] = useState(false);
+  const [showContainerDiscs, setContainerDiscs] = useState(false)
+
+  const handleButton1Press = () => {
+    setContainerTips(true);
+    setContainerDiscs(false);
+  };
+
+  const handleButton2Press = () => {
+    setContainerTips(false);
+    setContainerDiscs(true);
+  };
+
+  return(
+    <View style={styles.mainContainer}>
+      <Text style={styles.titleStyle}>Crop Care</Text>
+      <View style={styles.viewStyle}>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={handleButton1Press}>
+              <Text style={styles.buttonText}>Tips</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={handleButton2Press}>
+              <Text style={styles.buttonText}>Discussions</Text>
+            </TouchableOpacity>
         </View>
-    );
+
+        <View style={styles.postContainer}>
+          {showContainerTips && <ContainerTips/>}
+          {showContainerDiscs && <ContainerDiscs/>}
+        </View>
+
+        <View style={styles.floatButton}>
+          <TouchableOpacity onPress={()=>{props.navigation.navigate('addTip')}}>
+            <Text style={styles.fltBtnText}>+</Text>
+          </TouchableOpacity>
+        </View>
+      </View> 
+    </View>
+  );
 };
 
 
-
-
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row', // Horizontal layout
-    backgroundColor: '#E4FFF9',
-    borderRadius: 8,
-    padding: 16,
-    margin: 8,
-    borderWidth: 1,
+  mainContainer: {
+    backgroundColor: '#1B1B1B',
   },
-  textContainer: {
-    flex: 1, // Takes up remaining horizontal space
+
+  titleStyle: {
+    paddingTop: 42,
+    color: "#D8E9A8",
+    fontSize: 30,
+    fontStyle: "normal",
+    fontWeight: "700",
+    paddingLeft: 20,
+    paddingVertical: 20
+  },
+  viewStyle: {
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    backgroundColor: 'white',
+    height: '100%',
+    marginHorizontal: 5
+  },
+
+  // button design
+  buttonContainer:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    backgroundColor: '#76FEC5',
+    opacity: 1,
+  },
+
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 7,
+    paddingHorizontal: 50,
+    borderRadius: 999,
+    opacity: 1,
+    elevation: 3,
+    backgroundColor: '#1B1B1B',
+    margin: 10,
+  },
+  buttonText:{
+    fontSize: 15,
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+    color: "#D8E9A8",
+  },
+
+  // post card design
+  postContainer:{
+    backgroundColor: '#76FEC5',
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   question: {
@@ -54,6 +137,25 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 8,
   },
+
+  // float button
+  floatButton:{
+    position: 'absolute',
+    top: '70%',
+    left: '80%',
+    backgroundColor: "#D8E9A8",
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    height: 50,
+    width: 50,
+    borderRadius: 15,
+    elevation: 5,
+  },
+  fltBtnText:{
+    color: '1B1B1B',
+    fontSize: 30,
+  }
 });
 
 export default CropCareScreen;

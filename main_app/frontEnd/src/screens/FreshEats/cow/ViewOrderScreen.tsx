@@ -5,41 +5,16 @@ import { Divider } from 'react-native-paper';
 import OrderInfo from '../components/OrderInfo';
 import ComplOrderShow from '../components/ComplOrderShow';
 import CancelledOrderShow from '../components/CancelledOrderShow';
-import axios from 'axios';
-import { GLOBALKEYS } from '../../../../globalkeys';
-import { useAuth } from '../../../common/AuthContext';
 
 
 const userOrders = [
-    { "del_date": null, "status": "pending", "id": 1, "price": 230, "delDate_start": "24-11-2023", "delDate_end": "26-11-23", "seller_name": "Musatafa", "contact": "+0111115151" },
-    { "del_date": "26-11-2023", "status": "completed", "id": 2, "price": 340, "delDate_start": "25-11-2023", "delDate_end": "28-11-23", "seller_name": "Shamim", "contact": "+01511115151" },
-    { "del_date": null, "status": "pending", "id": 3, "price": 3000, "delDate_start": "26-11-2023", "delDate_end": "29-11-23", "seller_name": "Don", "contact": "+01511115151" }
+    {"del_date": null, "status": "pending", "id": 1, "price": 230, "delDate_start": "24-11-2023", "delDate_end": "26-11-23", "seller_name": "Musatafa", "contact" : "+0111115151"},
+    {"del_date": "26-11-2023", "status": "completed", "id": 2, "price": 340, "delDate_start": "25-11-2023", "delDate_end": "28-11-23", "seller_name": "Shamim", "contact" : "+01511115151"},
+    {"del_date": null, "status": "pending", "id": 3, "price": 3000, "delDate_start": "26-11-2023", "delDate_end": "29-11-23", "seller_name": "Don", "contact" : "+01511115151"}
 ];
 
 
 const ViewOrderScreen = () => {
-
-    const { email } = useAuth();
-    const [orders, setOrders] = useState();
-
-    const fetchData = async () => {
-        await axios.get(`${GLOBALKEYS.myIp4Addr}/order/buyer/${email}`)
-            .then((Response) => setOrders(Response.data))
-            .catch((e) => console.log(e));
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-
-    const filterResultsByStat = (stat: number) => {
-        //price === 1(poultry) || 2(dairy) || 3(veg)
-        return orders?.filter(result => {
-            return result?.status === stat;
-        });
-    };
-
 
     const [selectedButton, setSelectedButton] = useState(1);
 
@@ -51,7 +26,7 @@ const ViewOrderScreen = () => {
         setSelectedButton(buttonId);
     };
 
-    console.log(filterResultsByStat(1));
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
             <Text style={styles.titleStyle}>
@@ -61,51 +36,49 @@ const ViewOrderScreen = () => {
             <View style={styles.innerView}>
 
 
-                <ScrollView>
-                    <View style={styles.tabView}>
+                <View style={styles.tabView}>
 
-                        <TouchableOpacity
-                            onPress={() => handleButtonPress(1)}
-                            style={[styles.tabBtn, { backgroundColor: selectedButton === 1 ? '#64ABBC' : '#D8E9A8' }]}
-                        >
-                            <Text style={{
-                                color: selectedButton === 1 ? '#FEFEFE' : '#1B1B1B',
-                                textAlign: 'center'
-                            }}> Pending </Text>
+                    <TouchableOpacity
+                        onPress={() => handleButtonPress(1)}
+                        style={[styles.tabBtn, { backgroundColor: selectedButton === 1 ? '#64ABBC' : '#D8E9A8' }]}
+                    >
+                        <Text style={{
+                            color: selectedButton === 1 ? '#FEFEFE' : '#1B1B1B',
+                            textAlign: 'center'
+                        }}> Pending </Text>
 
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => handleButtonPress(2)}
-                            style={[styles.tabBtn, { backgroundColor: selectedButton === 2 ? '#64ABBC' : '#D8E9A8' }]}
-                        >
-                            <Text style={{
-                                textAlign: 'center',
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleButtonPress(2)}
+                        style={[styles.tabBtn, { backgroundColor: selectedButton === 2 ? '#64ABBC' : '#D8E9A8' }]}
+                    >
+                        <Text style={{
+                            textAlign: 'center',
 
-                            }}> Completed </Text>
-                        </TouchableOpacity>
+                        }}> Completed </Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                            onPress={() => handleButtonPress(3)}
-                            style={[styles.tabBtn, { backgroundColor: selectedButton === 3 ? '#64ABBC' : '#D8E9A8' }]}
-                        >
-                            <Text style={{
-                                color: selectedButton === 3 ? '#FEFEFE' : '#1B1B1B',
-                                textAlign: 'center',
-                            }}> Cancelled </Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleButtonPress(3)}
+                        style={[styles.tabBtn, { backgroundColor: selectedButton === 3 ? '#64ABBC' : '#D8E9A8' }]}
+                    >
+                        <Text style={{
+                            color: selectedButton === 3 ? '#FEFEFE' : '#1B1B1B',
+                            textAlign: 'center',
+                        }}> Cancelled </Text>
+                    </TouchableOpacity>
 
-                    </View>
-                    <View style={{ marginTop: 20, marginBottom: 30 }}>
-                        {selectedButton == 1 && <OrderTable data={filterResultsByStat(1)} setOrderID={setOrderInfo} />}
-                        {selectedButton == 2 && <ComplOrderShow orderInfo={filterResultsByStat(2)} />}
-                        {selectedButton == 3 && <CancelledOrderShow orderInfo={filterResultsByStat(3)} />}
-                    </View>
-                    {/* {orderId && setOrderInfo(userOrders.filter(item=> item.id == orderId))} */}
-                    <Divider />
-                    {orderInfo && selectedButton == 1 &&
-                        <OrderInfo orderInfo={orderInfo} />
-                    }
-                </ScrollView>
+                </View>
+                <View style={{marginTop: 20, marginBottom: 30}}>
+                        {selectedButton == 1 && <OrderTable data={userOrders} setOrderID={setOrderInfo}/>}
+                        {selectedButton == 2 && <ComplOrderShow orderInfo={userOrders}/>}
+                        {selectedButton == 3 && <CancelledOrderShow orderInfo={userOrders}/>}
+                </View>
+                {/* {orderId && setOrderInfo(userOrders.filter(item=> item.id == orderId))} */}
+                <Divider/>
+                {orderInfo && selectedButton == 1  && 
+                <OrderInfo orderInfo={orderInfo}/>
+                }
             </View>
 
         </SafeAreaView>
@@ -135,11 +108,11 @@ const styles = StyleSheet.create({
         height: 46,
         flexShrink: 0,
         marginBottom: 8,
-        alignSelf: 'center',
+        alignSelf:'center',
         borderRadius: 20,
         paddingTop: 3,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent:'space-between'
     },
     tabBtn: {
 

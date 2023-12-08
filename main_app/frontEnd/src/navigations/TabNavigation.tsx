@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import FreshEatsScreen from '../screens/FreshEats/FreshEatsScreen';
@@ -10,16 +10,15 @@ import { Ionicons } from '@expo/vector-icons';
 import UserInfo from '../screens/profile/UserInfo';
 import FreshEatsStack from '../screens/FreshEats/navigations/FreshEatsStack';
 import GChatsStack from '../screens/Gchats/Components/GChatsStack';
-import { getData } from '../screens/FreshEats/AsyncStorageUtils';
+import CropCareStack from '../screens/CropCare/navigations/CropCareStack'
 
 const tabs = createBottomTabNavigator();
 
 const TabNavigation = ()=>{
-  
 
   return (
       <tabs.Navigator 
-        initialRouteName="Fresh Eats"
+        initialRouteName="Posts"
         screenOptions={{
           tabBarStyle:{backgroundColor: "#1B1B1B", alignItems: 'center', borderTopWidth: 0}, 
           tabBarShowLabel: false,
@@ -30,9 +29,20 @@ const TabNavigation = ()=>{
           headerShown: false,
         }}
       >
+        <tabs.Screen 
+          name="Posts" 
+          component={PostScreen}
+          options={{
+            tabBarLabel:"Post",
+            tabBarIcon: ({focused})=> <MaterialCommunityIcons name={focused ? "post": "post-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
+            tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
+            tabBarActiveTintColor: "#E0FFB4"
+          }}
+          
+        />
         <tabs.Screen
             name="Crop Care" 
-            component={CropCareScreen}
+            component = {CropCareStack}
             options={{
               tabBarIcon: ({focused})=> <Ionicons name={focused ? "leaf": "leaf-outline"} size={focused? 30: 20} color={focused ?"#DDFF54" : 'white'}/>,
               tabBarLabelStyle:{fontSize: 14, fontWeight: 'bold'},
