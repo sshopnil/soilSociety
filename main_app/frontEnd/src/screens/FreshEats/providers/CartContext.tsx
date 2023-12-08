@@ -8,6 +8,7 @@ export interface CartItem {
   price: number;
   qty: number;
   img_src: string;
+  seller_email: string;
 }
 
 interface ShoppingCartContextProps {

@@ -48,7 +48,8 @@ const ResultDetails: React.FC<{ item: CartItem }> = ({ item }) => {
             name: thisItem?.name,
             price: thisItem?.price,
             qty: Oqty,
-            img_src: thisItem?.img_src
+            img_src: thisItem?.img_src,
+            seller_email: thisItem?.user_email
         }
         addToCart(item);
     }
@@ -128,7 +129,13 @@ const ResultDetails: React.FC<{ item: CartItem }> = ({ item }) => {
                                             style={{ flex: .5 }}
                                             variant={'outline'}
                                             colorScheme={'blueGray'}
-                                            onPress={() => navigation.navigate('order-item', { name: thisItem?.name, price: thisItem?.price, qty: Oqty, id: thisItem?.prod_id })}
+                                            onPress={() => navigation.navigate('order-item', { 
+                                                name: thisItem?.name, 
+                                                price: thisItem?.price, 
+                                                qty: Oqty, 
+                                                id: thisItem?.prod_id,
+                                                seller_email: thisItem?.user_email
+                                            })}
                                         >
                                             Buy Now
                                         </Button>

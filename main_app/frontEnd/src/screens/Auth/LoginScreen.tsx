@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { VStack, FormControl, Input, Button, NativeBaseProvider } from "native-base";
 import axios from "axios";
-import { GLOBALKEYS} from '../../../globalkeys';
+import { GLOBALKEYS } from '../../../globalkeys';
 import { getData, storeData } from "../FreshEats/AsyncStorageUtils";
 import { useAuth } from "../../common/AuthContext";
 
@@ -11,7 +11,7 @@ function LoginForm() {
     const [formData, setData] = React.useState({});
     const [errors, setErrors] = React.useState({});
     const navigation = useNavigation();
-    const {emailSet, setLogin, setSeller} = useAuth();
+    const { emailSet, setLogin, setSeller } = useAuth();
 
 
     const validate = () => {
@@ -28,7 +28,7 @@ function LoginForm() {
             });
             return false;
         }
-        else if(formData.password === undefined){
+        else if (formData.password === undefined) {
             setErrors({
                 ...errors,
                 pass: 'Password is required'
@@ -42,11 +42,12 @@ function LoginForm() {
 
 
 
-    const onSubmit = () => {
-        // console.log(formData);
+    const onSubmit = async () => {
+        console.log(formData);
+        // await axios.get(`${GLOBALKEYS.myIp4Addr}/users`, {httpAgent:'true'}).then(Response=> console.log(Response.data)).catch(e=> console.log(e)) 
         // axios.get(`${GLOBALKEYS.myIp4Addr}/users/`).then(Response=> console.log(Response.data))
         validate()
-            ? axios.post(`${GLOBALKEYS.myIp4Addr}/users/login`, formData).then(Response => {
+            ? axios.post(`http://192.168.0.103:3000/users/login`, formData).then(Response => {
                 console.log(Response.data);
                 if (Response.data.token !== "general") {
                     setSeller();
@@ -61,10 +62,10 @@ function LoginForm() {
                 //         })
                 //      );
                 setLogin();
-                
+
                 emailSet(formData.email);
                 navigation.navigate('home');
-            }).catch(e=> {
+            }).catch(e => {
                 console.log(e);
                 setErrors({ ...errors, pass: "invalid password" });
                 setData({});

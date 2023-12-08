@@ -71,8 +71,12 @@ const OrderItem = () => {
     //     "buyer_address": "address*"
     //   }
 
-    let arr = parameters?.name !== null ? [parameters?.id] : cart.map((item)=> item.id);
-    // console.log(arr)
+    let arr = parameters?.name !== null ? [{id: parameters?.id, seller_email: parameters?.seller_email, qty: parameters?.qty}] : cart.map((item)=> {
+        return {id: item.id,
+                seller_email: item.seller_email,
+                qty: item.qty}
+    });
+    console.log(arr)
     const handleSubmit= async ()=>{
         // console.log(formData);
         
@@ -82,7 +86,7 @@ const OrderItem = () => {
             delDate_start: genStartDate(),
             delDate_end: genEndDate(),
             buyer_email: email,
-            product_ids: arr,
+            products: arr,
             ...formData
         }
         // console.log(body);
