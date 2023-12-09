@@ -11,7 +11,7 @@ function LoginForm() {
     const [formData, setData] = React.useState({});
     const [errors, setErrors] = React.useState({});
     const navigation = useNavigation();
-    const { emailSet, setLogin, setSeller } = useAuth();
+    const { emailSet, setLogin, setSeller, isSeller } = useAuth();
 
 
     const validate = () => {
@@ -41,16 +41,18 @@ function LoginForm() {
     // axios.get(`${myIp4Addr}/users/`).then(Response=> console.log(Response.data));
 
 
+                    // console.log(isSeller);
 
     const onSubmit = async () => {
-        console.log(formData);
+        // console.log(formData);
         // await axios.get(`${GLOBALKEYS.myIp4Addr}/users`, {httpAgent:'true'}).then(Response=> console.log(Response.data)).catch(e=> console.log(e)) 
         // axios.get(`${GLOBALKEYS.myIp4Addr}/users/`).then(Response=> console.log(Response.data))
         validate()
-            ? axios.post(`http://192.168.0.103:3000/users/login`, formData).then(Response => {
-                console.log(Response.data);
-                if (Response.data.token !== "general") {
+            ? axios.post(`${GLOBALKEYS.myIp4Addr}/users/login`, formData).then(Response => {
+                console.log(Response.data.token);
+                if (Response.data.token === "privileged") {
                     setSeller();
+                    // console.log(isSeller);
                 }
                 // storeData('user', formData.email);
                 console.log('success');

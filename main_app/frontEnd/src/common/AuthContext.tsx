@@ -9,6 +9,7 @@ interface AuthProps {
     setLogout:()=> void,
     emailSet:(mail: string)=> void
     setSeller:()=> void
+    setBuyer:()=>void
 }
 
 const AuthContext = createContext<AuthProps | undefined>(undefined);
@@ -45,6 +46,9 @@ const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setIsSell(true);
     }
 
+const setBuyer = ()=>{
+        setIsSell(false);
+    }
     const contextValue: AuthProps = {
         emailSet, 
         email,
@@ -53,7 +57,8 @@ const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setLogin,
         setLogout,
         isSeller,
-        setSeller
+        setSeller,
+        setBuyer
     };
 
     return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

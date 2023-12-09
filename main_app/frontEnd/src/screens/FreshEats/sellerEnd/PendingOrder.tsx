@@ -3,25 +3,42 @@ import { View, TouchableOpacity, StyleSheet, SafeAreaView, Text} from 'react-nat
 import { NativeBaseProvider, VStack, Badge} from "native-base";
 import axios from "axios";
 import { GLOBALKEYS } from "../../../../globalkeys";
+import { useAuth } from "../../../common/AuthContext";
 
 
 
 const PendingOrder = () => {
-    const [prodIds, setId] = useState([]);
+    const [prods, setProds] = useState([]);
+    const {email} =useAuth();
 
-    // useEffect(()=>{
-    //     axios.get(`${GLOBALKEYS.myIp4Addr}/products/${parameters.id}`).then(Response => {
-    //         setThisItem(Response.data);
-    //     })
-    //         .catch(e => console.log(e + "could not get any product"));
-    // }, []);
+
+    useEffect(()=>{
+        axios.get(`${GLOBALKEYS.myIp4Addr}/order/seller`).then(Response => {
+            setProds(Response.data);
+            // console.log(Response.data);
+        })
+            .catch(e => console.log(e + "could not get any product"));
+    }, []);
+
+
+    const filterResultsByProds = () => {
+        //price === 1(poultry) || 2(dairy) || 3(veg)
+        return prods?.filter(result => {
+            return result?.products.filter(resu=>{
+                return resu.seller_email === email;
+            });
+        });
+    }
+
+    console.log(filterResultsByProds());
     return (
         <NativeBaseProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#1B1B1B", justifyContent: 'flex-start', paddingTop: 48, }}>
                 <Text style={styles.titleStyle}>
                     Pending Order
                 </Text>
-                <View style={styles.innerView}>                  
+                <View style={styles.innerView}>
+                                      
                 </View>
             </SafeAreaView>
         </NativeBaseProvider>

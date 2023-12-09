@@ -13,9 +13,9 @@ import { useAuth } from "../../common/AuthContext";
 const UserInfo = () => {
     const navigation = useNavigation();
     const [user, setUser] = useState();
-    const {email, setLogout} = useAuth();
+    const {email, setLogout, isSeller, setBuyer} = useAuth();
 
-
+    console.log(isSeller);
     const fetchData = ()=>{
         axios.get(`${GLOBALKEYS.myIp4Addr}/users/${email}`).then(Response => setUser(Response.data))
             .catch(e => console.log(e));
@@ -36,7 +36,7 @@ const UserInfo = () => {
                     <Text style={styles.textName}>{user?.name}</Text>
                     <Text style={styles.extraText}>Seller Status: <Text style={{fontSize: 18, fontWeight:'300'}}>{user?.user_role == 'general'? 'Not a seller': 'Active'}</Text></Text>
                     <Button
-                        onPress={setLogout}
+                        onPress={()=> {setLogout(), setBuyer()}}
                         variant={'subtle'}
                         colorScheme={'rose'}
                         mt={'100%'}
